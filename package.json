@@ -7,7 +7,9 @@
     "build": "tsc",
     "start": "tsc && node dist/index.js",
     "build:watch": "tsc --watch",
-    "start:watch": "node --watch dist/index.js"
+    "start:watch": "node --watch dist/index.js",
+    "test": "npx playwright test"
+
   },
   "keywords": [],
   "author": "",

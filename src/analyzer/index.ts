@@ -4,7 +4,7 @@ import { log } from "../logger";
 import fs from "fs/promises";
 
 //const MODEL_ID = "openai-community/gpt2";
-const MODEL_ID = "Qwen/Qwen2-72B-Instruct";
+const MODEL_ID = "Qwen/Qwen2.5-72B-Instruct";
 
 // This is the new, more robust OpenAI-compatible endpoint URL.
 const API_URL = "https://router.huggingface.co/v1/chat/completions";
@@ -87,21 +87,21 @@ export class WebsiteAnalyzer {
       throw Error();
     }
 
-    // const promptContent = `
-    // You are an expert test automation engineer. Your task is to analyze the following HTML and generate an executable test script using Playwright.
+    const promptContent = `
+    You are an expert test automation engineer. Your task is to analyze the following HTML and generate an executable test script using Playwright.
 
-    // **Instructions:**
-    // 1.  Carefully examine the HTML to identify all key user-facing features, components, and interactions (e.g., forms, buttons, navigation links, display sections).
-    // 2.  For each feature, write one end-to-end test case.
-    // 3.  Each test should be written in TypeScript using the Playwright testing library.
-    // 4.  Use descriptive test names and clear assertions (e.g., expect(page).toHaveURL(...)).
-    // 5.  Return ONLY the TypeScript code for the test file. Do not include any explanations or markdown formatting.
+    **Instructions:**
+    1.  Carefully examine the HTML to identify all key user-facing features, components, and interactions (e.g., forms, buttons, navigation links, display sections).
+    2.  For each feature, write one end-to-end test case.
+    3.  Each test should be written in TypeScript using the Playwright testing library.
+    4.  Use descriptive test names and clear assertions (e.g., expect(page).toHaveURL(...)).
+    5.  Return ONLY the TypeScript code for the test file. Do not include any explanations or markdown formatting.
 
-    // **HTML to Analyze:**
-    // ${html}
-    // `;
+    **HTML to Analyze:**
+    ${html}
+    `;
 
-    const promptContent = `generate a short example playright typescript example, Return ONLY the TypeScript code for the test file. Do not include any explanations or markdown formatting`;
+    //const promptContent = `generate a short example playright typescript example, Return ONLY the TypeScript code for the test file. Do not include any explanations or markdown formatting`;
 
     const messages = [
       {
