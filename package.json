@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "tsc && node dist/index.js",
     "build:watch": "tsc --watch",
     "start:watch": "node --watch dist/index.js"
   },
@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@playwright/test": "^1.53.2",
     "@types/node": "^22.15.29",
     "@types/node-fetch": "^2.6.12",
     "ts-node": "^10.9.2",
@@ -21,9 +22,9 @@
   "dependencies": {
     "@types/node-cache": "^4.2.5",
     "dotenv": "^17.0.1",
-    "fs": "^0.0.1-security",
     "heap-js": "^2.6.0",
     "node-cache": "^5.1.2",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "playwright": "^1.45.0"
   }
 }

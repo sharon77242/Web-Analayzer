@@ -1,57 +1,56 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 import { log } from "../logger";
+import fs from "fs/promises";
 
 //const MODEL_ID = "openai-community/gpt2";
 const MODEL_ID = "Qwen/Qwen2-72B-Instruct";
 
 // This is the new, more robust OpenAI-compatible endpoint URL.
 const API_URL = "https://router.huggingface.co/v1/chat/completions";
+const nowTime = new Date().getTime();
 
 export class WebsiteAnalyzer {
   async analyze(url: string): Promise<void> {
-    const fs = await import("fs/promises");
     const path = await import("path");
-    await log("info", `Analyzing website: ${url}`);
+    await log(nowTime, "info", `Analyzing website: ${url}`);
     const data = await this.fetchData(url);
-    const parsedData = this.parseData(data);
 
-    const outputsDir = path.join(process.cwd(), "outputs");
+    const outputsDir = path.join(process.cwd(), "outputs/" + nowTime);
     const safeUrl = url.replace(/[^a-z0-9]/gi, "_").toLowerCase();
     await fs.mkdir(outputsDir, { recursive: true });
 
-    const lernedFilePath = path.join(outputsDir, `scenarios_${safeUrl}.json`);
-    const file = await fs.readFile(lernedFilePath, "utf8");
-    let scenarios;
-    if (file) {
-      scenarios = JSON.parse(file);
-    } else {
-      scenarios = await this.learnWebsite(parsedData);
-      await fs.writeFile(
-        lernedFilePath,
-        JSON.stringify(scenarios, null, 2),
-        "utf-8"
-      );
-    }
-
     // Write outputs to files in outputs folder
     await fs.writeFile(
-      path.join(outputsDir, `fetchData_${safeUrl}.txt`),
+      path.join(outputsDir, `fetchUrl_${safeUrl}.txt`),
       data,
       "utf-8"
     );
-    await fs.writeFile(
-      path.join(outputsDir, `parsedData_${safeUrl}.json`),
-      JSON.stringify(parsedData, null, 2),
-      "utf-8"
-    );
 
-    await log("info", `Outputs written to outputs/ for ${url}`);
+    const testsDir = path.join(process.cwd(), "src/tests/");
+    await fs.mkdir(testsDir, { recursive: true });
+
+    const lernedFilePath = path.join(testsDir, `tests_${safeUrl}.spec.ts`);
+    let scenarios: string;
+
+    try {
+      const file = await fs.readFile(lernedFilePath, "utf8");
+      scenarios = JSON.parse(file);
+    } catch (e) {
+      scenarios = await this.learnWebsite(data);
+      await fs.writeFile(lernedFilePath, scenarios, "utf-8");
+    }
+
+    await log(
+      nowTime,
+      "info",
+      `Outputs written to outputs/${nowTime} for ${url}`
+    );
     // Further analysis logic can be added here
   }
 
   async fetchData(url: string): Promise<string> {
-    await log("debug", `Fetching data from: ${url}`);
+    await log(nowTime, "debug", `Fetching data from: ${url}`);
     // Use dynamic import for node-fetch to avoid ESM/CJS issues
     const fetch = (await import("node-fetch")).default;
     try {
@@ -61,54 +60,48 @@ export class WebsiteAnalyzer {
       }
       return await response.text();
     } catch (err) {
-      await log("error", "Fetch error", { error: err });
+      await log(nowTime, "error", "Fetch error", { error: err });
       return `<html>Failed to fetch real data from ${url}</html>`;
     }
-  }
-
-  parseData(data: string): object {
-    log("debug", `Parsing data: ${data}`);
-    // Simulate parsing the HTML data
-    return { content: data };
   }
 
   /**
    * Use Hugging Face Inference API (free tier) to extract website features from HTML.
    * This is an async function and returns a Promise.
    */
-  async learnWebsite(parsedData: any): Promise<void> {
+  async learnWebsite(html: any): Promise<string> {
     await log(
+      nowTime,
       "info",
       "Learning website from parsed data using Hugging Face AI..."
     );
-    const html = parsedData.content;
-    const prompt = `Extract the main features, sections, and forms from the following HTML. Return a JSON array of feature names.\nHTML:\n${html}`;
-    // const messages = [
-    //   { role: "user", content: "The most interesting thing about space is" },
-    // ];
 
     const API_TOKEN = process.env.HUGGINGFACE_TOKEN;
 
     if (!API_TOKEN) {
-      console.error(
+      await log(
+        nowTime,
+        "error",
         "Error: HUGGINGFACE_TOKEN environment variable is not set."
       );
-      return;
+      throw Error();
     }
 
-    const promptContent = `
-    You are an expert QA engineer. Your task is to analyze the following HTML and generate comprehensive test scenarios.
+    // const promptContent = `
+    // You are an expert test automation engineer. Your task is to analyze the following HTML and generate an executable test script using Playwright.
 
-    **Instructions:**
-    1.  Carefully examine the HTML to identify all key user-facing features, components, and interactions (e.g., forms, buttons, navigation links, display sections).
-    2.  For each identified feature, create a list of test scenarios.
-    3.  Each test scenario should be a clear, actionable instruction for a human tester.
-    4.  Include positive tests (happy path), negative tests (invalid inputs, error conditions), and edge cases where applicable.
-    5.  Return the output as a single, valid JSON object. The keys of the object should be the feature names, and the value for each key should be an array of strings, where each string is a detailed test scenario.
+    // **Instructions:**
+    // 1.  Carefully examine the HTML to identify all key user-facing features, components, and interactions (e.g., forms, buttons, navigation links, display sections).
+    // 2.  For each feature, write one end-to-end test case.
+    // 3.  Each test should be written in TypeScript using the Playwright testing library.
+    // 4.  Use descriptive test names and clear assertions (e.g., expect(page).toHaveURL(...)).
+    // 5.  Return ONLY the TypeScript code for the test file. Do not include any explanations or markdown formatting.
 
-    **HTML to Analyze:**
-    ${html}
-    `;
+    // **HTML to Analyze:**
+    // ${html}
+    // `;
+
+    const promptContent = `generate a short example playright typescript example, Return ONLY the TypeScript code for the test file. Do not include any explanations or markdown formatting`;
 
     const messages = [
       {
@@ -125,6 +118,10 @@ export class WebsiteAnalyzer {
     // Use dynamic import for node-fetch to avoid ESM/CJS issues
     const fetch = (await import("node-fetch")).default;
     try {
+      const controller = new AbortController();
+      // --- NEW: Set a 3-minute timeout for the request ---
+      const timeoutId = setTimeout(() => controller.abort(), 300000); // 300,000 ms = 5 minutes
+
       const response = await fetch(API_URL, {
         method: "POST",
         headers: {
@@ -132,37 +129,57 @@ export class WebsiteAnalyzer {
           Authorization: `Bearer ${API_TOKEN}`,
         },
         body: JSON.stringify(requestBody),
+        signal: controller.signal,
       });
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error(`--- API ERROR ---`);
-        console.error(`Status: ${response.status} ${response.statusText}`);
-        console.error(`Server Response: ${errorText}`);
-        return;
+        await log(
+          nowTime,
+          "error",
+          `Status: ${response.status} ${response.statusText}, Server Response: ${errorText}`
+        );
+        throw Error();
       }
       const result: any = await response.json();
 
-      console.log("\n--- SUCCESS! ---");
+      await log(nowTime, "info", "\n--- SUCCESS! ---");
       if (result.choices && result.choices.length > 0) {
         const content = result.choices[0].message.content;
-        console.log("Raw model output received.");
+        await log(nowTime, "info", "Raw model output received.");
+        await log(nowTime, "debug", `response from model: ${content}`);
 
         try {
-          const cleanedContent = content.replace(/```json\n|```/g, "").trim();
-          return JSON.parse(cleanedContent);
+          const cleanedContent = content
+            // Use a regular expression to find and remove the opening fence (e.g., ```typescript)
+            .replace(/^```(typescript|javascript)?\n/, "")
+            // Find and remove the closing fence at the end of the string
+            .replace(/\n```$/, "")
+            .trim();
+          return cleanedContent;
         } catch (parseError) {
-          console.log(
-            "\nCould not parse the output as JSON. The model may have returned plain text."
+          await log(
+            nowTime,
+            "error",
+            "\nCould not parse the output as JSON. The model may have returned plain text." +
+              parseError
           );
-          console.log("Raw output was:", content);
+          await log(nowTime, "info", "Raw output was:", content);
+          throw Error();
         }
       } else {
-        console.log("Received an unexpected response format:", result);
+        await log(
+          nowTime,
+          "error",
+          "Received an unexpected response format:",
+          result
+        );
+        throw Error();
       }
     } catch (error) {
-      console.error("\n--- A GENERAL ERROR OCCURRED ---");
-      console.error(error);
+      await log(nowTime, "error", "\n--- A GENERAL ERROR OCCURRED ---");
+      await log(nowTime, "error", `${error}`);
+      throw Error();
     }
   }
 }

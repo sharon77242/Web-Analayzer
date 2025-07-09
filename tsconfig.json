@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "outDir": "./dist",
     "rootDir": "./src",
-    "esModuleInterop": false,
+    "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -77,5 +77,5 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
   }
   ,
-  "include": ["src/**/*"]
+  "include": ["src/**/*.ts", "tests/**/*.ts", "playwright.config.ts"],
 }

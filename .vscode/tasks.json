@@ -9,6 +9,17 @@
         "kind": "build",
         "isDefault": true
       }
+    },
+    {
+      "label": "build",
+      "type": "npm",
+      "script": "build",
+      "problemMatcher": ["$tsc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "detail": "Runs 'npm run build' which executes 'tsc' to compile the TypeScript files."
     }
   ]
 }
