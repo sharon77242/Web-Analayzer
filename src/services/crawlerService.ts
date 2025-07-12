@@ -1,13 +1,14 @@
 import { chromium } from "playwright";
 import { dbService, DESTINATION } from "./dbService";
-import { scenariosService } from "./scenariosService";
-import { testGeneratorService } from "./testsGeneratorService";
 import { logError, logInfo } from "../logger";
+import { testGeneratorManager } from "../testGeneratorManager";
+import { URL_STORE } from "../config";
+import globalStore from "../globalStore";
 
 const visited = new Set();
 const queue: string[] = [];
 
-async function crawlAndGenerateTests(startUrl: string) {
+async function learnWebsite(startUrl: string) {
   const browser = await chromium.launch();
   const context = await browser.newContext();
   const page = await context.newPage();
@@ -17,18 +18,15 @@ async function crawlAndGenerateTests(startUrl: string) {
 
   while (queue.length > 0) {
     const currentUrl = queue.shift()!;
+    globalStore[URL_STORE] = currentUrl;
+
     await logInfo("Processing page", currentUrl);
 
     try {
       await page.goto(currentUrl, { waitUntil: "networkidle" });
       const html = await page.content();
-      await dbService.write(DESTINATION.HTML, currentUrl, html);
-
-      const scenarios: string = await scenariosService.learnScenarios(
-        currentUrl,
-        html
-      );
-      await testGeneratorService.learnTests(currentUrl, html, scenarios);
+      await dbService.write(DESTINATION.HTML, html);
+      await testGeneratorManager.learnPage(html);
 
       const links = await page.$$eval("a", (anchors) =>
         anchors.map((anchor) => anchor.href)
@@ -52,5 +50,5 @@ async function crawlAndGenerateTests(startUrl: string) {
 }
 
 export const crawlAndGenerateTestsService = {
-  crawlAndGenerateTests,
+  learnWebsite,
 };

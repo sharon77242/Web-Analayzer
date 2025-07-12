@@ -2,6 +2,7 @@ import { API_URL, MODEL_ID } from "../config";
 import { logInfo } from "../logger";
 import type { ModelResponse } from "../types";
 import { ThrowingError } from "../types";
+import { promptHistoryService } from "./promptHistoryService";
 
 async function learn(promptContent: string): Promise<string> {
   if (!process.env.HUGGINGFACE_TOKEN)
@@ -9,16 +10,11 @@ async function learn(promptContent: string): Promise<string> {
       "Error: HUGGINGFACE_TOKEN environment variable is not set."
     );
   const API_TOKEN: string = process.env.HUGGINGFACE_TOKEN;
-  const messages = [
-    {
-      role: "user",
-      content: promptContent,
-    },
-  ];
+  await promptHistoryService.addUserPrompt(promptContent);
 
   const requestBody = {
     model: MODEL_ID,
-    messages: messages,
+    messages: promptHistoryService.getMessages(),
   };
 
   try {
@@ -43,10 +39,13 @@ async function learn(promptContent: string): Promise<string> {
       );
     }
     const result: ModelResponse = (await response.json()) as ModelResponse;
-
+    const { choices } = result;
     await logInfo("\n--- SUCCESS! ---");
-    if (result.choices && result.choices.length > 0) {
-      return result.choices[0].message.content;
+    if (choices && choices.length > 0) {
+      const content = choices[0].message.content;
+      await promptHistoryService.addAssistantPrompt(content);
+
+      return content;
     } else {
       throw new ThrowingError(
         "Received an unexpected response format:",

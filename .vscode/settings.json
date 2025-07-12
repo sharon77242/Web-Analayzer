@@ -1,4 +1,7 @@
 {
     "editor.formatOnSave": true,
-    "eslint.validate": ["typescript"]
+    "eslint.validate": ["typescript"],
+    "eslint.options": {
+        "overrideConfigFile": "src/eslint.config.ts"
+    }
 }

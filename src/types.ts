@@ -23,3 +23,13 @@ interface modelChoice {
 export interface ModelResponse {
   choices: modelChoice[];
 }
+
+export interface TestRunResult {
+  success: boolean;
+  output: string; // This will contain stdout on success, or the error log on failure
+}
+
+export interface PromptType {
+  role: string;
+  content: string;
+}
