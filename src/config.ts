@@ -2,7 +2,6 @@ export const nowTime = new Date().getTime();
 export const currentDir = process.cwd();
 export const MODEL_ID = "Qwen/Qwen2.5-72B-Instruct";
 export const API_URL = "https://router.huggingface.co/v1/chat/completions";
-
 export const scenariosPrompt = (
   html: string
 ): string => `You are an expert QA analyst. Your task is to analyze the following HTML and generate comprehensive test scenarios.
@@ -19,15 +18,17 @@ ${html}`;
 
 export const generateTestsPrompt = (
   scenarios: string,
-  html: string
+  html: string,
+  playwrightVersion: string
 ): string => `
-You are an expert test automation engineer. Your task is to write an executable test script using Playwright based on the provided test scenario and HTML context.
+You are an expert test automation engineer. Your task is to write an executable test script using Playwright version: ${playwrightVersion} based on the provided test scenario and HTML context.
 
 **Instructions:**
 1.  Write a complete Playwright test that implements the given scenario.
 2.  Use CSS selectors to locate the necessary elements from the provided HTML.
 3.  Include a clear assertion to verify the expected outcome.
-4.  Return ONLY the TypeScript code for the test file. Do not include any explanations or markdown formatting.
+4.  Ensure code is running and does not have syntax issues.
+5.  Return ONLY the TypeScript code for the test file. Do not include any explanations or markdown formatting.
 
 ---
 

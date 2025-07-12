@@ -1,0 +1,67 @@
+```json
+{
+  "Main Logo and Title": [
+    "User sees the Wikipedia logo displayed prominently at the top of the page.",
+    "User sees the text 'The Free Encyclopedia' displayed below the logo.",
+    "User loads the page in dark mode and sees the logo and text colors adjust accordingly."
+  ],
+  "Primary Language Links": [
+    "User clicks on 'English' and is redirected to the English Wikipedia homepage.",
+    "User hovers over '日本語' (Japanese) and sees the text decoration underline the link.",
+    "User clicks on 'Русский' (Russian) and is redirected to the Russian Wikipedia homepage.",
+    "User clicks on 'Deutsch' (German) and is redirected to the German Wikipedia homepage.",
+    "User clicks on 'Español' (Spanish) and is redirected to the Spanish Wikipedia homepage.",
+    "User clicks on '中文' (Chinese) and is redirected to the Chinese Wikipedia homepage."
+  ],
+  "Search Functionality": [
+    "User types a search query into the search input and sees the results dropdown appear.",
+    "User submits a search query by pressing Enter in the search input and is redirected to the search results page.",
+    "User clicks on the 'Search' button and is redirected to the search results page.",
+    "User leaves the search input empty and sees no suggestions dropdown.",
+    "User focuses on the search input and sees a blue border and shadow appear.",
+    "User selects a different language from the language picker in the search form and sees the search input change to the selected language's direction (LTR/RTL).",
+    "User selects a language not listed in the language picker and verifies that the default language remains English."
+  ],
+  "Language Picker in Search Form": [
+    "User clicks on the language dropdown in the search form and sees the list of available languages expand.",
+    "User hover over the language dropdown and sees the background color subtly change.",
+    "User selects a language from the dropdown and sees the selected language reflected in the search input.",
+    "User clicks outside the dropdown and sees it close.",
+    "User uses the keyboard to navigate through the language options and selects one using the Enter key.",
+    "User attempts to select a language from the dropdown while the search input is focused, and the dropdown appears above the input."
+  ],
+  "Secondary Language Links Dropdown": [
+    "User clicks on 'Read Wikipedia in your language' and sees the secondary language links dropdown expand.",
+    "User hovers over a secondary language link and sees the link background change color.",
+    "User clicks on a secondary language link and is redirected to the corresponding Wikipedia homepage.",
+    "User closes the dropdown by clicking on 'Read Wikipedia in your language' again.",
+    "User resizes the browser window to mobile view and sees the layout of the secondary language links adapt to the new screen size.",
+    "User loads the page in a language that reads right-to-left (RTL) and sees the dropdown direction adjust accordingly."
+  ],
+  "Other Projects Navigation": [
+    "User clicks on the 'Commons' link and is redirected to the Wikimedia Commons homepage.",
+    "User hovers over the 'Wikivoyage' link and sees the cursor change to a pointer.",
+    "User clicks on the 'Wiktionary' link and is redirected to the Wiktionary homepage.",
+    "User clicks on the 'Wikibooks' link and is redirected to the Wikibooks homepage.",
+    "User clicks on the 'Wikinews' link and is redirected to the Wikinews homepage.",
+    "User clicks on the 'Wikidata' link and is redirected to the Wikidata homepage.",
+    "User clicks on the 'Wikiversity' link and is redirected to the Wikiversity homepage.",
+    "User clicks on the 'Wikiquote' link and is redirected to the Wikiquote homepage.",
+    "User clicks on the 'MediaWiki' link and is redirected to the MediaWiki homepage.",
+    "User clicks on the 'Wikisource' link and is redirected to the Wikisource homepage.",
+    "User clicks on the 'Wikispecies' link and is redirected to the Wikispecies homepage.",
+    "User clicks on the 'Wikifunctions' link and is redirected to the Wikifunctions homepage.",
+    "User clicks on the 'Meta-Wiki' link and is redirected to the Meta-Wiki homepage."
+  ],
+  "Footer Content": [
+    "User clicks on the 'Donate' link and is redirected to the donation page in a new tab.",
+    "User clicks on the 'Download Wikipedia for Android or iOS' link and is redirected to the app listing page.",
+    "User clicks on the 'Google Play Store' badge and is directed to the Google Play Store page for the Wikipedia app in a new tab.",
+    "User clicks on the 'Apple App Store' badge and is directed to the Apple App Store page for the Wikipedia app in a new tab.",
+    "User scrolls to the footer and sees a description of the Wikimedia Foundation.",
+    "User clicks on the 'Creative Commons Attribution-ShareAlike License' link and is directed to the license information page.",
+    "User clicks on the 'Terms of Use' link and is directed to the terms of use page.",
+    "User clicks on the 'Privacy Policy' link and is directed to the privacy policy page."
+  ]
+}
+```

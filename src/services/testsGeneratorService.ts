@@ -1,12 +1,16 @@
 import { generateTestsPrompt } from "../config";
 import { logInfo } from "../logger";
+import { getPackageVersion } from "../utils";
 import { aIService } from "./aIService";
 import { dbService, DESTINATION } from "./dbService";
 
 async function learnTests(url: string, html: string, scenarios: string) {
   await logInfo("sending model to learn tests for url: ", url);
+  const playwrightVersion = await getPackageVersion("playwright");
 
-  const response = await aIService.learn(generateTestsPrompt(scenarios, html));
+  const response = await aIService.learn(
+    generateTestsPrompt(scenarios, html, playwrightVersion)
+  );
   const cleanedContent = response
     // Use a regular expression to find and remove the opening fence (e.g., ```typescript)
     .replace(/^```(typescript|javascript)?\n/, "")

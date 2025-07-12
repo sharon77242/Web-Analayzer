@@ -2,6 +2,7 @@ import { chromium } from "playwright";
 import { dbService, DESTINATION } from "./dbService";
 import { scenariosService } from "./scenariosService";
 import { testGeneratorService } from "./testsGeneratorService";
+import { logError, logInfo } from "../logger";
 
 const visited = new Set();
 const queue: string[] = [];
@@ -16,7 +17,7 @@ async function crawlAndGenerateTests(startUrl: string) {
 
   while (queue.length > 0) {
     const currentUrl = queue.shift()!;
-    console.log(`\nProcessing page: ${currentUrl}`);
+    await logInfo("Processing page", currentUrl);
 
     try {
       await page.goto(currentUrl, { waitUntil: "networkidle" });
@@ -39,11 +40,11 @@ async function crawlAndGenerateTests(startUrl: string) {
         if (link && new URL(link).hostname === domain && !visited.has(link)) {
           visited.add(link);
           queue.push(link);
-          console.log(`  Found new link, adding to queue: ${link}`);
+          await logInfo("Found new link, adding to queue", link);
         }
       }
     } catch (error) {
-      console.error(`  Failed to process ${currentUrl}: ${error}`);
+      await logError("Failed to process", { currentUrl, error });
     }
   }
 

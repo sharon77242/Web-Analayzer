@@ -23,7 +23,8 @@ async function write(destination: DESTINATION, url: string, data: string) {
 
   try {
     await fs.writeFile(fullPath, data, "utf-8");
-  } catch (e) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_error) {
     const dirOnly = path.dirname(fullPath);
     await fs.mkdir(dirOnly, { recursive: true });
     await fs.writeFile(fullPath, data, "utf-8");
@@ -40,6 +41,7 @@ async function read(
   try {
     const result = await fs.readFile(path, "utf-8");
     return JSON.parse(result) as string;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     return null;
   }

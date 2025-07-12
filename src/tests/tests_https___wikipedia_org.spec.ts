@@ -1,208 +1,299 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from "@playwright/test";
 
-test.describe('Wikipedia Test Suite', () => {
-  const url = 'https://www.wikipedia.org';
+test.describe("Wikipedia Test Suite", () => {
+  let page: Page;
 
-  test('Page Load', async ({ page }) => {
-    await page.goto(url);
-    // Verify no errors are present
-    const errors = await page.evaluate(() => {
-      return Array.from(document.querySelectorAll('.error')).map(e => e.textContent);
-    });
-    expect(errors.length).toBe(0);
-
-    // Verify content is accessible without JS
-    await page.emulateMedia({ media: 'screen', colorScheme: 'light', reducedMotion: 'no-preference' });
-    await page.context().setJavaScriptEnabled(false);
-    await page.reload();
-    expect(await page.innerText('h1')).toBe('Wikipedia');
+  test.beforeEach(async ({ browser }) => {
+    page = await browser.newPage();
+    await page.goto("https://www.wikipedia.org");
   });
 
-  test('Title and Description', async ({ page }) => {
-    await page.goto(url);
-    expect(await page.title()).toBe('Wikipedia');
-    const metaDescription = await page.locator('meta[name="description"]').getAttribute('content');
-    expect(metaDescription).toBe('Wikipedia is a free online encyclopedia, created and edited by volunteers around the world and hosted by the Wikimedia Foundation.');
+  test.afterEach(async () => {
+    await page.close();
   });
 
-  test('Logo Display', async ({ page }) => {
-    await page.goto(url);
-    const logo = await page.locator('.central-textlogo__image');
-    expect(await logo.getAttribute('alt')).toBe('Wikipedia');
+  test("Main Logo and Title", async () => {
+    const logo = page.locator(".central-featured-logo");
+    const slogan = page.locator(".localized-slogan");
 
-    await page.setViewportSize({ width: 400, height: 600 });
-    expect(await logo.getAttribute('style')).toContain('width: 150px; height: 25px;');
+    await expect(logo).toBeVisible();
+    await expect(slogan).toHaveText("The Free Encyclopedia");
 
-    await page.emulateMedia({ media: 'screen', colorScheme: 'dark' });
-    expect(await logo.getAttribute('filter')).toContain('invert(100%)');
-  });
-
-  test('Search Functionality', async ({ page }) => {
-    await page.goto(url);
-    const searchInput = page.locator('#searchInput');
-    const searchButton = page.locator('.pure-button.pure-button-primary-progressive');
-
-    // Valid search term
-    await searchInput.fill('Playwright');
-    await searchButton.click();
-    expect(page.url()).toBe(`${url}/search-redirect.php?family=wikipedia&search=Playwright`);
-
-    // Long search term
-    await page.goto(url);
-    await searchInput.fill('a'.repeat(2000));
-    await searchButton.click();
-    expect(await page.locator('.error').innerText()).toBe('');
-
-    // Special characters
-    await page.goto(url);
-    await searchInput.fill('!@#$%^&*()');
-    await searchButton.click();
-    expect(await page.locator('.error').innerText()).toBe('');
-
-    // Empty search term
-    await page.goto(url);
-    await searchInput.fill('');
-    await searchButton.click();
-    expect(await page.locator('.error').innerText()).toBe('');
-
-    // Language selection
-    const languageSelector = page.locator('#searchLanguage');
-    await languageSelector.selectOption({ label: 'Français' });
-    await searchInput.fill('Playwright');
-    await searchButton.click();
-    expect(page.url()).toBe(`${url}/search-redirect.php?family=wikipedia&search=Playwright&language=fr`);
-
-    // Focus on search input
-    await page.goto(url);
-    await searchInput.focus();
-    expect(await searchInput.getAttribute('style')).toContain('background-color: var(--background-color-base)');
-  });
-
-  test('Language Navigation', async ({ page }) => {
-    const featuredLanguages = ['en', 'ja', 'ru', 'de', 'es', 'fr', 'zh', 'it', 'pt', 'fa'];
-    for (const lang of featuredLanguages) {
-      await page.goto(url);
-      await page.locator(`#js-link-box-${lang}`).click();
-      expect(page.url()).toBe(`https://${lang}.wikipedia.org/`);
-    }
-
-    // Hover over a featured language
-    await page.mouse.move(10, 10);
-    await page.locator('#js-link-box-en').hover();
-    expect(await page.locator('#js-link-box-en strong').getAttribute('style')).toContain('text-decoration: underline;');
-
-    // Access 'All Languages' section
-    await page.goto(url);
-    const allLanguagesButton = page.locator('#js-lang-list-button');
-    await allLanguagesButton.click();
-    expect(await page.locator('.lang-list-container').isVisible()).toBe(true);
-
-    // Click on a language with fewer than 1,000,000 articles
-    await page.locator('.langlist a[href="//ab.wikipedia.org/"]').click();
-    expect(page.url()).toBe(`https://ab.wikipedia.org/`);
-
-    // Scroll through the 'All Languages' section on mobile
-    await page.setViewportSize({ width: 360, height: 640 });
-    await allLanguagesButton.click();
-    await page.locator('.lang-list-container').evaluate((element) => element.scrollBy(0, 2000));
-    expect(await page.locator('.lang-list-container').isVisible()).toBe(true);
-
-    // Search for a specific language in the 'All Languages' section
-    await page.locator('input[type=search]').fill('Français');
-    expect(await page.locator('.langlist a[href="//fr.wikipedia.org/"]').innerText()).toBe('Français');
-  });
-
-  test('Responsive Design', async ({ page }) => {
-    await page.goto(url);
-
-    // Resize to mobile
-    await page.setViewportSize({ width: 360, height: 640 });
-    expect(await page.locator('.central-featured-lang').first().getAttribute('style')).not.toContain('position: absolute;');
-
-    // Resize to desktop
-    await page.setViewportSize({ width: 1200, height: 800 });
-    expect(await page.locator('.central-featured-lang').first().getAttribute('style')).toContain('position: absolute;');
-
-    // Rotate mobile device
-    await page.setViewportSize({ width: 360, height: 640 });
+    // Dark mode
     await page.evaluate(() => {
-      const mediaQueryList = matchMedia('(orientation: portrait)');
-      mediaQueryList.addEventListener('change', (event) => {
-        if (event.matches) {
-          document.querySelector('.central-featured-lang').style.position = 'absolute';
-        } else {
-          document.querySelector('.central-featured-lang').style.position = 'relative';
-        }
-      });
-      mediaQueryList.matchMedia('(orientation: landscape)');
+      document.documentElement.classList.add("dark");
     });
-    expect(await page.locator('.central-featured-lang').first().getAttribute('style')).toContain('position: relative;');
+    await expect(logo).toHaveAttribute(
+      "src",
+      "portal/wikipedia.org/assets/img/Wikipedia-logo-v2@2x.png"
+    );
+    await expect(slogan).toHaveCSS("color", "rgb(234, 236, 240)");
   });
 
-  test('Footer Links and Content', async ({ page }) => {
-    await page.goto(url);
+  test("Primary Language Links", async () => {
+    const englishLink = page.locator("#js-link-box-en");
+    const japaneseLink = page.locator("#js-link-box-ja");
+    const russianLink = page.locator("#js-link-box-ru");
+    const germanLink = page.locator("#js-link-box-de");
+    const spanishLink = page.locator("#js-link-box-es");
+    const chineseLink = page.locator("#js-link-box-zh");
 
-    // Donate link
-    await page.locator('.footer-sidebar-content a').filter({ hasText: 'You can support our work with a donation.' }).click();
-    expect(page.url()).toBe('https://donate.wikimedia.org/?wmf_medium=portal&wmf_campaign=portalFooter&wmf_source=portalFooter');
+    await englishLink.click();
+    expect(page.url()).toBe("https://en.wikipedia.org/");
 
-    // View Mobile Site
-    await page.goto(url);
-    await page.locator('a').filter({ hasText: 'View mobile site' }).click();
-    expect(page.url()).toBe('https://www.wikipedia.org/mobile/');
+    await page.goto("https://www.wikipedia.org");
+    await japaneseLink.hover();
+    await expect(japaneseLink).toHaveCSS(
+      "text-decoration",
+      "underline solid rgb(234, 236, 240)"
+    );
 
-    // Other Projects
-    await page.goto(url);
-    const otherProjects = await page.locator('.other-projects .other-project-link').all();
-    for (const project of otherProjects) {
-      await project.click({ button: 'left', modifiers: ['Shift'] });
-      expect(project.getAttribute('href')).not.toBe(null);
-    }
+    await page.goto("https://www.wikipedia.org");
+    await russianLink.click();
+    expect(page.url()).toBe("https://ru.wikipedia.org/");
 
-    // Download Wikipedia App
-    await page.mouse.move(10, 10);
-    await page.locator('.footer-sidebar-text').nth(1).hover();
-    expect(await page.locator('.app-badge-android').getAttribute('style')).toContain('text-decoration: none; color: var(--color-progressive);');
-    expect(await page.locator('.app-badge-ios').getAttribute('style')).toContain('text-decoration: none; color: var(--color-progressive);');
+    await page.goto("https://www.wikipedia.org");
+    await germanLink.click();
+    expect(page.url()).toBe("https://de.wikipedia.org/");
+
+    await page.goto("https://www.wikipedia.org");
+    await spanishLink.click();
+    expect(page.url()).toBe("https://es.wikipedia.org/");
+
+    await page.goto("https://www.wikipedia.org");
+    await chineseLink.click();
+    expect(page.url()).toBe("https://zh.wikipedia.org/");
   });
 
-  test('Localization and Internationalization', async ({ page }) => {
-    await page.goto(url);
+  test("Search Functionality", async () => {
+    const searchInput = page.locator("#searchInput");
+    const searchButton = page.locator("button.pure-button-primary-progressive");
 
-    // Supported language
-    await page.context().setExtraHTTPHeaders({
-      'Accept-Language': 'fr'
-    });
-    await page.reload();
-    expect(await page.locator('.localized-slogan').innerText()).toBe('L’encyclopédie libre');
+    await searchInput.fill("Playwright");
+    await expect(page.locator("#typeahead-suggestions")).toBeVisible();
 
-    // Right-to-left language
-    await page.context().setExtraHTTPHeaders({
-      'Accept-Language': 'ar'
-    });
-    await page.reload();
-    expect(await page.locator('.localized-slogan').innerText()).toBe('الموسوعة الحرة');
-    expect(await page.locator('body').getAttribute('dir')).toBe('rtl');
+    await searchInput.press("Enter");
+    expect(page.url()).toContain("/search-redirect.php?");
 
-    // Unsupported language
-    await page.context().setExtraHTTPHeaders({
-      'Accept-Language': 'abc'
-    });
-    await page.reload();
-    expect(await page.locator('.localized-slogan').innerText()).toBe('The Free Encyclopedia');
+    await page.goto("https://www.wikipedia.org");
+    await searchButton.click();
+    expect(page.url()).toContain("/search-redirect.php?");
+
+    await page.goto("https://www.wikipedia.org");
+    await searchInput.fill("");
+    await expect(page.locator("#typeahead-suggestions")).not.toBeVisible();
+
+    await searchInput.focus();
+    await expect(searchInput).toHaveCSS("border-color", "rgb(54, 101, 223)");
+
+    await searchInput.selectOption({ label: "French" });
+    await expect(searchInput).toHaveAttribute("dir", "ltr");
+
+    await searchInput.selectOption({ label: "Hebrew" });
+    await expect(searchInput).toHaveAttribute("dir", "rtl");
+
+    await searchInput.selectOption({ label: "Bodo" });
+    await expect(searchInput).toHaveAttribute("dir", "ltr");
   });
 
-  test('Accessibility Features', async ({ page }) => {
-    await page.goto(url);
+  test("Language Picker in Search Form", async () => {
+    const searchInput = page.locator("#searchInput");
 
-    // Skip to main content
-    await page.locator('.screen-reader-text').nth(1).click();
-    expect(await page.locator('main').getAttribute('aria-labelledby')).toBe('www-wikipedia-org');
+    const languageDropdown = page.locator(".styled-select");
+    const languageOptions = page.locator(".styled-select > select > option");
+    const activeHelper = page.locator(".styled-select-active-helper");
 
-    // Tab through interactive elements
-    await page.keyboard.press('Tab');
-    expect(await page.locator('#searchInput').getAttribute('aria-describedby')).toBe('searchInput');
-    await page.keyboard.press('Tab');
-    expect(await page.locator('#js-lang-list-button').getAttribute('aria-expanded')).toBe('false');
+    await languageDropdown.click();
+    await expect(languageOptions).toBeVisible();
+
+    await languageDropdown.hover();
+    await expect(languageDropdown).toHaveCSS(
+      "background-color",
+      "rgb(248, 249, 250)"
+    );
+
+    await languageDropdown.selectOption({ label: "French" });
+    await expect(searchInput).toHaveValue("fr");
+
+    await page.click("body");
+    await expect(languageOptions).not.toBeVisible();
+
+    await languageDropdown.press("ArrowDown");
+    await languageDropdown.press("Enter");
+    await expect(searchInput).toHaveValue("fr");
+
+    await searchInput.focus();
+    await languageDropdown.click();
+    await expect(activeHelper).toBeVisible();
+  });
+
+  test("Secondary Language Links Dropdown", async () => {
+    const dropdownButton = page.locator("#js-lang-list-button");
+    const dropdownContent = page.locator(".lang-list-container");
+    const languageLinks = page.locator(
+      ".lang-list-container > .lang-list > ul > li > a"
+    );
+
+    await dropdownButton.click();
+    await expect(dropdownContent).toBeVisible();
+
+    await languageLinks.first().hover();
+    await expect(languageLinks.first()).toHaveCSS(
+      "background-color",
+      "rgb(76, 78, 81)"
+    );
+
+    await languageLinks.first().click();
+    expect(page.url()).toBe("https://ar.wikipedia.org/");
+
+    await page.goto("https://www.wikipedia.org");
+    await dropdownButton.click();
+    await dropdownButton.click();
+    await expect(dropdownContent).not.toBeVisible();
+
+    await page.setViewportSize({ width: 480, height: 800 });
+    await expect(dropdownContent).toHaveCSS("width", "100%");
+
+    await page.goto("https://www.wikipedia.org");
+    await page.evaluate(() => {
+      document.documentElement.setAttribute("dir", "rtl");
+    });
+    await dropdownButton.click();
+    await expect(dropdownContent).toHaveCSS("direction", "rtl");
+  });
+
+  test("Other Projects Navigation", async () => {
+    const commonsLink = page.locator('a:has-text("Commons")');
+    const wikivoyageLink = page.locator('a:has-text("Wikivoyage")');
+    const wiktionaryLink = page.locator('a:has-text("Wiktionary")');
+    const wikibooksLink = page.locator('a:has-text("Wikibooks")');
+    const wikinewsLink = page.locator('a:has-text("Wikinews")');
+    const wikidataLink = page.locator('a:has-text("Wikidata")');
+    const wikiversityLink = page.locator('a:has-text("Wikiversity")');
+    const wikiquoteLink = page.locator('a:has-text("Wikiquote")');
+    const mediawikiLink = page.locator('a:has-text("MediaWiki")');
+    const wikisourceLink = page.locator('a:has-text("Wikisource")');
+    const wikispeciesLink = page.locator('a:has-text("Wikispecies")');
+    const wikifunctionsLink = page.locator('a:has-text("Wikifunctions")');
+    const metaWikiLink = page.locator('a:has-text("Meta-Wiki")');
+
+    await commonsLink.click();
+    expect(page.url()).toBe("https://commons.wikimedia.org/");
+
+    await page.goto("https://www.wikipedia.org");
+    await wikivoyageLink.hover();
+    await expect(wikivoyageLink).toHaveCSS("cursor", "pointer");
+
+    await page.goto("https://www.wikipedia.org");
+    await wiktionaryLink.click();
+    expect(page.url()).toBe("https://www.wiktionary.org/");
+
+    await page.goto("https://www.wikipedia.org");
+    await wikibooksLink.click();
+    expect(page.url()).toBe("https://www.wikibooks.org/");
+
+    await page.goto("https://www.wikipedia.org");
+    await wikinewsLink.click();
+    expect(page.url()).toBe("https://www.wikinews.org/");
+
+    await page.goto("https://www.wikipedia.org");
+    await wikidataLink.click();
+    expect(page.url()).toBe("https://www.wikidata.org/");
+
+    await page.goto("https://www.wikipedia.org");
+    await wikiversityLink.click();
+    expect(page.url()).toBe("https://www.wikiversity.org/");
+
+    await page.goto("https://www.wikipedia.org");
+    await wikiquoteLink.click();
+    expect(page.url()).toBe("https://www.wikiquote.org/");
+
+    await page.goto("https://www.wikipedia.org");
+    await mediawikiLink.click();
+    expect(page.url()).toBe("https://www.mediawiki.org/");
+
+    await page.goto("https://www.wikipedia.org");
+    await wikisourceLink.click();
+    expect(page.url()).toBe("https://www.wikisource.org/");
+
+    await page.goto("https://www.wikipedia.org");
+    await wikispeciesLink.click();
+    expect(page.url()).toBe("https://species.wikimedia.org/");
+
+    await page.goto("https://www.wikipedia.org");
+    await wikifunctionsLink.click();
+    expect(page.url()).toBe("https://www.wikifunctions.org/");
+
+    await page.goto("https://www.wikipedia.org");
+    await metaWikiLink.click();
+    expect(page.url()).toBe("https://meta.wikimedia.org/");
+  });
+
+  test("Footer Content", async () => {
+    const donateLink = page.locator(
+      'a:has-text("You can support our work with a donation.")'
+    );
+    const downloadLink = page.locator(
+      'a:has-text("Download Wikipedia for Android or iOS")'
+    );
+    const googlePlayStoreBadge = page.locator(
+      "a:has(.sprite.svg-badge_google_play_store)"
+    );
+    const appleAppStoreBadge = page.locator(
+      "a:has(.sprite.svg-badge_ios_app_store)"
+    );
+    const foundationDescription = page.locator(
+      '.footer-sidebar-text[data-jsl10n="portal.footer-description"]'
+    );
+    const ccLicenseLink = page.locator(
+      'a:has-text("Creative Commons Attribution-ShareAlike License")'
+    );
+    const termsOfUseLink = page.locator('a:has-text("Terms of Use")');
+    const privacyPolicyLink = page.locator('a:has-text("Privacy Policy")');
+
+    await expect(donateLink).toHaveAttribute("target", "_blank");
+    await donateLink.click();
+    await expect(page).toHaveURL(/donate\.wikimedia\.org/);
+
+    await page.goto("https://www.wikipedia.org");
+    await expect(downloadLink).toHaveAttribute(
+      "href",
+      "/wiki/List_of_Wikipedia_mobile_applications"
+    );
+
+    await expect(googlePlayStoreBadge).toHaveAttribute("target", "_blank");
+    await googlePlayStoreBadge.click();
+    await expect(page).toHaveURL(/play\.google\.com/);
+
+    await page.goto("https://www.wikipedia.org");
+    await expect(appleAppStoreBadge).toHaveAttribute("target", "_blank");
+    await appleAppStoreBadge.click();
+    await expect(page).toHaveURL(/itunes\.apple\.com/);
+
+    await page.goto("https://www.wikipedia.org");
+    await page.evaluate(() => {
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+    await expect(foundationDescription).toBeVisible();
+    await expect(foundationDescription).toHaveText(
+      "Wikipedia is hosted by the Wikimedia Foundation, a non-profit organization that also hosts a range of other projects."
+    );
+
+    await ccLicenseLink.click();
+    await expect(page).toHaveURL(
+      /creativecommons\.org\/licenses\/by-sa\/4\.0\//
+    );
+
+    await page.goto("https://www.wikipedia.org");
+    await termsOfUseLink.click();
+    await expect(page).toHaveURL(
+      /foundation\.wikimedia\.org\/wiki\/Special:MyLanguage\/Policy:Terms_of_Use/
+    );
+
+    await page.goto("https://www.wikipedia.org");
+    await privacyPolicyLink.click();
+    await expect(page).toHaveURL(
+      /foundation\.wikimedia\.org\/wiki\/Special:MyLanguage\/Policy:Privacy_policy/
+    );
   });
 });

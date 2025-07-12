@@ -11,8 +11,10 @@ export default tseslint.config(
     // This section is crucial for type-aware rules.
     languageOptions: {
       parserOptions: {
-        project: true,
-        tsconfigRootDir: import.meta.dirname,
+        project: "../tsconfig.json",
+        // --- CORRECTED ---
+        // Use __dirname, which is the CommonJS equivalent of import.meta.dirname
+        tsconfigRootDir: __dirname,
       },
     },
     // Apply this configuration to all files

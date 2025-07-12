@@ -1,6 +1,6 @@
-
 import { API_URL, MODEL_ID } from "../config";
 import { logInfo } from "../logger";
+import type { ModelResponse } from "../types";
 import { ThrowingError } from "../types";
 
 async function learn(promptContent: string): Promise<string> {
@@ -42,7 +42,7 @@ async function learn(promptContent: string): Promise<string> {
         `Status: ${response.status} ${response.statusText}, Server Response: ${errorText}`
       );
     }
-    const result: any = await response.json();
+    const result: ModelResponse = (await response.json()) as ModelResponse;
 
     await logInfo("\n--- SUCCESS! ---");
     if (result.choices && result.choices.length > 0) {

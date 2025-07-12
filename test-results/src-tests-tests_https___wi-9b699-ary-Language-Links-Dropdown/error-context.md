@@ -1,0 +1,1224 @@
+# Page snapshot
+
+```yaml
+- main:
+  - heading "Wikipedia The Free Encyclopedia" [level=1]:
+    - text: Wikipedia
+    - strong: The Free Encyclopedia
+  - navigation "Top languages":
+    - link "English 7,009,000+ articles":
+      - /url: //en.wikipedia.org/
+      - strong: English
+      - text: 7,009,000+ articles
+    - link "日本語 1,462,000+ 記事":
+      - /url: //ja.wikipedia.org/
+      - strong: 日本語
+      - text: 1,462,000+ 記事
+    - link "Русский 2 050 000+ статей":
+      - /url: //ru.wikipedia.org/
+      - strong: Русский
+      - text: 2 050 000+ статей
+    - link "Deutsch 3.024.000+ Artikel":
+      - /url: //de.wikipedia.org/
+      - strong: Deutsch
+      - text: 3.024.000+ Artikel
+    - link "Español 2.041.000+ artículos":
+      - /url: //es.wikipedia.org/
+      - strong: Español
+      - text: 2.041.000+ artículos
+    - link "Français 2 690 000+ articles":
+      - /url: //fr.wikipedia.org/
+      - strong: Français
+      - text: 2 690 000+ articles
+    - link "中文 1,482,000+ 条目 / 條目":
+      - /url: //zh.wikipedia.org/
+      - strong: 中文
+      - text: 1,482,000+ 条目 / 條目
+    - link "Italiano 1.922.000+ voci":
+      - /url: //it.wikipedia.org/
+      - strong: Italiano
+      - text: 1.922.000+ voci
+    - link "Português 1.148.000+ artigos":
+      - /url: //pt.wikipedia.org/
+      - strong: Português
+      - text: 1.148.000+ artigos
+    - link "فارسی ۱٬۰۴۳٬۰۰۰+ مقاله":
+      - /url: //fa.wikipedia.org/
+      - strong: فارسی
+      - text: ۱٬۰۴۳٬۰۰۰+ مقاله
+  - search:
+    - group:
+      - text: Search Wikipedia
+      - searchbox "Search Wikipedia"
+      - text: en
+      - combobox "en":
+        - option "Afrikaans"
+        - option "العربية"
+        - option "Asturianu"
+        - option "Azərbaycanca"
+        - option "Български"
+        - option "閩南語 / Bân-lâm-gú"
+        - option "বাংলা"
+        - option "Беларуская"
+        - option "Català"
+        - option "Čeština"
+        - option "Cymraeg"
+        - option "Dansk"
+        - option "Deutsch"
+        - option "Eesti"
+        - option "Ελληνικά"
+        - option "English" [selected]
+        - option "Español"
+        - option "Esperanto"
+        - option "Euskara"
+        - option "فارسی"
+        - option "Français"
+        - option "Galego"
+        - option "한국어"
+        - option "Հայերեն"
+        - option "हिन्दी"
+        - option "Hrvatski"
+        - option "Bahasa Indonesia"
+        - option "Italiano"
+        - option "עברית"
+        - option "ქართული"
+        - option "Ladin"
+        - option "Latina"
+        - option "Latviešu"
+        - option "Lietuvių"
+        - option "Magyar"
+        - option "Македонски"
+        - option "Malagasy"
+        - option "مصرى"
+        - option "Bahasa Melayu"
+        - option "Bahaso Minangkabau"
+        - option "မြန်မာဘာသာ"
+        - option "Nederlands"
+        - option "日本語"
+        - option "Norsk (bokmål)"
+        - option "Norsk (nynorsk)"
+        - option "Нохчийн"
+        - option "Oʻzbekcha / Ўзбекча"
+        - option "Polski"
+        - option "Português"
+        - option "Қазақша / Qazaqşa / قازاقشا"
+        - option "Română"
+        - option "Shqip"
+        - option "Simple English"
+        - option "Sinugboanong Binisaya"
+        - option "Slovenčina"
+        - option "Slovenščina"
+        - option "Српски / Srpski"
+        - option "Srpskohrvatski / Српскохрватски"
+        - option "Suomi"
+        - option "Svenska"
+        - option "தமிழ்"
+        - option "Татарча / Tatarça"
+        - option "తెలుగు"
+        - option "ภาษาไทย"
+        - option "Тоҷикӣ"
+        - option "تۆرکجه"
+        - option "Türkçe"
+        - option "Українська"
+        - option "اردو"
+        - option "Tiếng Việt"
+        - option "Winaray"
+        - option "中文"
+        - option "Русский"
+        - option "粵語"
+      - button "Search"
+  - navigation "All languages":
+    - button "Read Wikipedia in your language" [expanded]
+    - heading "1,000,000+ articles" [level=2]
+    - list:
+      - listitem:
+        - link "العربية":
+          - /url: //ar.wikipedia.org/
+      - listitem:
+        - link "Deutsch":
+          - /url: //de.wikipedia.org/
+      - listitem:
+        - link "English":
+          - /url: //en.wikipedia.org/
+      - listitem:
+        - link "Español":
+          - /url: //es.wikipedia.org/
+      - listitem:
+        - link "فارسی":
+          - /url: //fa.wikipedia.org/
+      - listitem:
+        - link "Français":
+          - /url: //fr.wikipedia.org/
+      - listitem:
+        - link "Italiano":
+          - /url: //it.wikipedia.org/
+      - listitem:
+        - link "مصرى":
+          - /url: //arz.wikipedia.org/
+      - listitem:
+        - link "Nederlands":
+          - /url: //nl.wikipedia.org/
+      - listitem:
+        - link "日本語":
+          - /url: //ja.wikipedia.org/
+      - listitem:
+        - link "Polski":
+          - /url: //pl.wikipedia.org/
+      - listitem:
+        - link "Português":
+          - /url: //pt.wikipedia.org/
+      - listitem:
+        - link "Sinugboanong Binisaya":
+          - /url: //ceb.wikipedia.org/
+      - listitem:
+        - link "Svenska":
+          - /url: //sv.wikipedia.org/
+      - listitem:
+        - link "Українська":
+          - /url: //uk.wikipedia.org/
+      - listitem:
+        - link "Tiếng Việt":
+          - /url: //vi.wikipedia.org/
+      - listitem:
+        - link "Winaray":
+          - /url: //war.wikipedia.org/
+      - listitem:
+        - link "中文":
+          - /url: //zh.wikipedia.org/
+      - listitem:
+        - link "Русский":
+          - /url: //ru.wikipedia.org/
+    - heading "100,000+ articles" [level=2]
+    - list:
+      - listitem:
+        - link "Afrikaans":
+          - /url: //af.wikipedia.org/
+      - listitem:
+        - link "Asturianu":
+          - /url: //ast.wikipedia.org/
+      - listitem:
+        - link "Azərbaycanca":
+          - /url: //az.wikipedia.org/
+      - listitem:
+        - link "Български":
+          - /url: //bg.wikipedia.org/
+      - listitem:
+        - link "閩南語 / Bân-lâm-gú":
+          - /url: //zh-min-nan.wikipedia.org/
+      - listitem:
+        - link "বাংলা":
+          - /url: //bn.wikipedia.org/
+      - listitem:
+        - link "Беларуская":
+          - /url: //be.wikipedia.org/
+      - listitem:
+        - link "Català":
+          - /url: //ca.wikipedia.org/
+      - listitem:
+        - link "Čeština":
+          - /url: //cs.wikipedia.org/
+      - listitem:
+        - link "Cymraeg":
+          - /url: //cy.wikipedia.org/
+      - listitem:
+        - link "Dansk":
+          - /url: //da.wikipedia.org/
+      - listitem:
+        - link "Eesti":
+          - /url: //et.wikipedia.org/
+      - listitem:
+        - link "Ελληνικά":
+          - /url: //el.wikipedia.org/
+      - listitem:
+        - link "Esperanto":
+          - /url: //eo.wikipedia.org/
+      - listitem:
+        - link "Euskara":
+          - /url: //eu.wikipedia.org/
+      - listitem:
+        - link "Galego":
+          - /url: //gl.wikipedia.org/
+      - listitem:
+        - link "한국어":
+          - /url: //ko.wikipedia.org/
+      - listitem:
+        - link "Հայերեն":
+          - /url: //hy.wikipedia.org/
+      - listitem:
+        - link "हिन्दी":
+          - /url: //hi.wikipedia.org/
+      - listitem:
+        - link "Hrvatski":
+          - /url: //hr.wikipedia.org/
+      - listitem:
+        - link "Bahasa Indonesia":
+          - /url: //id.wikipedia.org/
+      - listitem:
+        - link "עברית":
+          - /url: //he.wikipedia.org/
+      - listitem:
+        - link "ქართული":
+          - /url: //ka.wikipedia.org/
+      - listitem:
+        - link "Ladin":
+          - /url: //lld.wikipedia.org/
+      - listitem:
+        - link "Latina":
+          - /url: //la.wikipedia.org/
+      - listitem:
+        - link "Latviešu":
+          - /url: //lv.wikipedia.org/
+      - listitem:
+        - link "Lietuvių":
+          - /url: //lt.wikipedia.org/
+      - listitem:
+        - link "Magyar":
+          - /url: //hu.wikipedia.org/
+      - listitem:
+        - link "Македонски":
+          - /url: //mk.wikipedia.org/
+      - listitem:
+        - link "Malagasy":
+          - /url: //mg.wikipedia.org/
+      - listitem:
+        - link "Bahasa Melayu":
+          - /url: //ms.wikipedia.org/
+      - listitem:
+        - link "Bahaso Minangkabau":
+          - /url: //min.wikipedia.org/
+      - listitem:
+        - link "မြန်မာဘာသာ":
+          - /url: //my.wikipedia.org/
+      - listitem:
+        - text: Norsk
+        - list:
+          - text: (
+          - listitem:
+            - link "bokmål":
+              - /url: //no.wikipedia.org/
+          - listitem:
+            - text: ·
+            - link "nynorsk":
+              - /url: //nn.wikipedia.org/
+          - text: )
+      - listitem:
+        - link "Нохчийн":
+          - /url: //ce.wikipedia.org/
+      - listitem:
+        - link "Oʻzbekcha / Ўзбекча":
+          - /url: //uz.wikipedia.org/
+      - listitem:
+        - link "Қазақша / Qazaqşa / قازاقشا":
+          - /url: //kk.wikipedia.org/
+      - listitem:
+        - link "Română":
+          - /url: //ro.wikipedia.org/
+      - listitem:
+        - link "Shqip":
+          - /url: //sq.wikipedia.org/
+      - listitem:
+        - link "Simple English":
+          - /url: //simple.wikipedia.org/
+      - listitem:
+        - link "Slovenčina":
+          - /url: //sk.wikipedia.org/
+      - listitem:
+        - link "Slovenščina":
+          - /url: //sl.wikipedia.org/
+      - listitem:
+        - link "Српски / Srpski":
+          - /url: //sr.wikipedia.org/
+      - listitem:
+        - link "Srpskohrvatski / Српскохрватски":
+          - /url: //sh.wikipedia.org/
+      - listitem:
+        - link "Suomi":
+          - /url: //fi.wikipedia.org/
+      - listitem:
+        - link "தமிழ்":
+          - /url: //ta.wikipedia.org/
+      - listitem:
+        - link "Татарча / Tatarça":
+          - /url: //tt.wikipedia.org/
+      - listitem:
+        - link "తెలుగు":
+          - /url: //te.wikipedia.org/
+      - listitem:
+        - link "ภาษาไทย":
+          - /url: //th.wikipedia.org/
+      - listitem:
+        - link "Тоҷикӣ":
+          - /url: //tg.wikipedia.org/
+      - listitem:
+        - link "تۆرکجه":
+          - /url: //azb.wikipedia.org/
+      - listitem:
+        - link "Türkçe":
+          - /url: //tr.wikipedia.org/
+      - listitem:
+        - link "اردو":
+          - /url: //ur.wikipedia.org/
+      - listitem:
+        - link "粵語":
+          - /url: //zh-yue.wikipedia.org/
+    - heading "10,000+ articles" [level=2]
+    - list:
+      - listitem:
+        - link "Bahsa Acèh":
+          - /url: //ace.wikipedia.org/
+      - listitem:
+        - link "Alemannisch":
+          - /url: //als.wikipedia.org/
+      - listitem:
+        - link "አማርኛ":
+          - /url: //am.wikipedia.org/
+      - listitem:
+        - link "Aragonés":
+          - /url: //an.wikipedia.org/
+      - listitem:
+        - link "Արեւմտահայերէն":
+          - /url: //hyw.wikipedia.org/
+      - listitem:
+        - link "Bahasa Hulontalo":
+          - /url: //gor.wikipedia.org/
+      - listitem:
+        - link "Basa Bali":
+          - /url: //ban.wikipedia.org/
+      - listitem:
+        - link "Bahasa Banjar":
+          - /url: //bjn.wikipedia.org/
+      - listitem:
+        - link "Basa Banyumasan":
+          - /url: //map-bms.wikipedia.org/
+      - listitem:
+        - link "Башҡортса":
+          - /url: //ba.wikipedia.org/
+      - listitem:
+        - link "Беларуская (тарашкевіца)":
+          - /url: //be-tarask.wikipedia.org/
+      - listitem:
+        - link "Bikol Central":
+          - /url: //bcl.wikipedia.org/
+      - listitem:
+        - link "বিষ্ণুপ্রিয়া মণিপুরী":
+          - /url: //bpy.wikipedia.org/
+      - listitem:
+        - link "Boarisch":
+          - /url: //bar.wikipedia.org/
+      - listitem:
+        - link "Bosanski":
+          - /url: //bs.wikipedia.org/
+      - listitem:
+        - link "Brezhoneg":
+          - /url: //br.wikipedia.org/
+      - listitem:
+        - link "Чӑвашла":
+          - /url: //cv.wikipedia.org/
+      - listitem:
+        - link "Dagbanli":
+          - /url: //dag.wikipedia.org/
+      - listitem:
+        - link "الدارجة":
+          - /url: //ary.wikipedia.org/
+      - listitem:
+        - link "Diné Bizaad":
+          - /url: //nv.wikipedia.org/
+      - listitem:
+        - link "Emigliàn–Rumagnòl":
+          - /url: //eml.wikipedia.org/
+      - listitem:
+        - link "Fiji Hindi":
+          - /url: //hif.wikipedia.org/
+      - listitem:
+        - link "Føroyskt":
+          - /url: //fo.wikipedia.org/
+      - listitem:
+        - link "Frysk":
+          - /url: //fy.wikipedia.org/
+      - listitem:
+        - link "Gaeilge":
+          - /url: //ga.wikipedia.org/
+      - listitem:
+        - link "Gàidhlig":
+          - /url: //gd.wikipedia.org/
+      - listitem:
+        - link "گیلکی":
+          - /url: //glk.wikipedia.org/
+      - listitem:
+        - link "ગુજરાતી":
+          - /url: //gu.wikipedia.org/
+      - listitem:
+        - link "Hak-kâ-ngî / 客家語":
+          - /url: //hak.wikipedia.org/
+      - listitem:
+        - link "Hausa":
+          - /url: //ha.wikipedia.org/
+      - listitem:
+        - link "Hornjoserbsce":
+          - /url: //hsb.wikipedia.org/
+      - listitem:
+        - link "Ido":
+          - /url: //io.wikipedia.org/
+      - listitem:
+        - link "Igbo":
+          - /url: //ig.wikipedia.org/
+      - listitem:
+        - link "Ilokano":
+          - /url: //ilo.wikipedia.org/
+      - listitem:
+        - link "Interlingua":
+          - /url: //ia.wikipedia.org/
+      - listitem:
+        - link "Interlingue":
+          - /url: //ie.wikipedia.org/
+      - listitem:
+        - link "Ирон":
+          - /url: //os.wikipedia.org/
+      - listitem:
+        - link "Íslenska":
+          - /url: //is.wikipedia.org/
+      - listitem:
+        - link "Jawa":
+          - /url: //jv.wikipedia.org/
+      - listitem:
+        - link "ಕನ್ನಡ":
+          - /url: //kn.wikipedia.org/
+      - listitem:
+        - link "Kapampangan":
+          - /url: //pam.wikipedia.org/
+      - listitem:
+        - link "ភាសាខ្មែរ":
+          - /url: //km.wikipedia.org/
+      - listitem:
+        - link "Kotava":
+          - /url: //avk.wikipedia.org/
+      - listitem:
+        - link "Kreyòl Ayisyen":
+          - /url: //ht.wikipedia.org/
+      - listitem:
+        - link "Kurdî / كوردی":
+          - /url: //ku.wikipedia.org/
+      - listitem:
+        - link "کوردیی ناوەندی":
+          - /url: //ckb.wikipedia.org/
+      - listitem:
+        - link "Кыргызча":
+          - /url: //ky.wikipedia.org/
+      - listitem:
+        - link "Кырык мары":
+          - /url: //mrj.wikipedia.org/
+      - listitem:
+        - link "Lëtzebuergesch":
+          - /url: //lb.wikipedia.org/
+      - listitem:
+        - link "Lìgure":
+          - /url: //lij.wikipedia.org/
+      - listitem:
+        - link "Limburgs":
+          - /url: //li.wikipedia.org/
+      - listitem:
+        - link "Lombard":
+          - /url: //lmo.wikipedia.org/
+      - listitem:
+        - link "मैथिली":
+          - /url: //mai.wikipedia.org/
+      - listitem:
+        - link "മലയാളം":
+          - /url: //ml.wikipedia.org/
+      - listitem:
+        - link "मराठी":
+          - /url: //mr.wikipedia.org/
+      - listitem:
+        - link "მარგალური":
+          - /url: //xmf.wikipedia.org/
+      - listitem:
+        - link "مازِرونی":
+          - /url: //mzn.wikipedia.org/
+      - listitem:
+        - link "Mìng-dĕ̤ng-ngṳ̄ / 閩東語":
+          - /url: //cdo.wikipedia.org/
+      - listitem:
+        - link "Монгол":
+          - /url: //mn.wikipedia.org/
+      - listitem:
+        - link "Napulitano":
+          - /url: //nap.wikipedia.org/
+      - listitem:
+        - link "नेपाल भाषा":
+          - /url: //new.wikipedia.org/
+      - listitem:
+        - link "नेपाली":
+          - /url: //ne.wikipedia.org/
+      - listitem:
+        - link "Nordfriisk":
+          - /url: //frr.wikipedia.org/
+      - listitem:
+        - link "Occitan":
+          - /url: //oc.wikipedia.org/
+      - listitem:
+        - link "Олык марий":
+          - /url: //mhr.wikipedia.org/
+      - listitem:
+        - link "ଓଡି଼ଆ":
+          - /url: //or.wikipedia.org/
+      - listitem:
+        - link "অসমীযা়":
+          - /url: //as.wikipedia.org/
+      - listitem:
+        - link "ਪੰਜਾਬੀ":
+          - /url: //pa.wikipedia.org/
+      - listitem:
+        - link "پنجابی (شاہ مکھی)":
+          - /url: //pnb.wikipedia.org/
+      - listitem:
+        - link "پښتو":
+          - /url: //ps.wikipedia.org/
+      - listitem:
+        - link "Piemontèis":
+          - /url: //pms.wikipedia.org/
+      - listitem:
+        - link "Plattdüütsch":
+          - /url: //nds.wikipedia.org/
+      - listitem:
+        - link "Qaraqalpaqsha":
+          - /url: //kaa.wikipedia.org/
+      - listitem:
+        - link "Qırımtatarca":
+          - /url: //crh.wikipedia.org/
+      - listitem:
+        - link "Runa Simi":
+          - /url: //qu.wikipedia.org/
+      - listitem:
+        - link "Русиньскый":
+          - /url: //rue.wikipedia.org/
+      - listitem:
+        - link "संस्कृतम्":
+          - /url: //sa.wikipedia.org/
+      - listitem:
+        - link "ᱥᱟᱱᱛᱟᱲᱤ":
+          - /url: //sat.wikipedia.org/
+      - listitem:
+        - link "سرائیکی":
+          - /url: //skr.wikipedia.org/
+      - listitem:
+        - link "Саха Тыла":
+          - /url: //sah.wikipedia.org/
+      - listitem:
+        - link "Scots":
+          - /url: //sco.wikipedia.org/
+      - listitem:
+        - link "ChiShona":
+          - /url: //sn.wikipedia.org/
+      - listitem:
+        - link "Sicilianu":
+          - /url: //scn.wikipedia.org/
+      - listitem:
+        - link "සිංහල":
+          - /url: //si.wikipedia.org/
+      - listitem:
+        - link "سنڌي":
+          - /url: //sd.wikipedia.org/
+      - listitem:
+        - link "Ślůnski":
+          - /url: //szl.wikipedia.org/
+      - listitem:
+        - link "Basa Sunda":
+          - /url: //su.wikipedia.org/
+      - listitem:
+        - link "Kiswahili":
+          - /url: //sw.wikipedia.org/
+      - listitem:
+        - link "Taclḥit":
+          - /url: //shi.wikipedia.org/
+      - listitem:
+        - link "Tagalog":
+          - /url: //tl.wikipedia.org/
+      - listitem:
+        - link "ၽႃႇသႃႇတႆး":
+          - /url: //shn.wikipedia.org/
+      - listitem:
+        - link "ⵜⴰⵎⴰⵣⵉⵖⵜ ⵜⴰⵏⴰⵡⴰⵢⵜ":
+          - /url: //zgh.wikipedia.org/
+      - listitem:
+        - link "chiTumbuka":
+          - /url: //tum.wikipedia.org/
+      - listitem:
+        - link "Basa Ugi":
+          - /url: //bug.wikipedia.org/
+      - listitem:
+        - link "Vèneto":
+          - /url: //vec.wikipedia.org/
+      - listitem:
+        - link "Volapük":
+          - /url: //vo.wikipedia.org/
+      - listitem:
+        - link "Walon":
+          - /url: //wa.wikipedia.org/
+      - listitem:
+        - link "文言":
+          - /url: //zh-classical.wikipedia.org/
+      - listitem:
+        - link "吴语":
+          - /url: //wuu.wikipedia.org/
+      - listitem:
+        - link "ייִדיש":
+          - /url: //yi.wikipedia.org/
+      - listitem:
+        - link "Yorùbá":
+          - /url: //yo.wikipedia.org/
+      - listitem:
+        - link "Zazaki":
+          - /url: //diq.wikipedia.org/
+      - listitem:
+        - link "žemaitėška":
+          - /url: //bat-smg.wikipedia.org/
+      - listitem:
+        - link "isiZulu":
+          - /url: //zu.wikipedia.org/
+      - listitem:
+        - link "ꯃꯤꯇꯩ ꯂꯣꯟ":
+          - /url: //mni.wikipedia.org/
+    - heading "1,000+ articles" [level=2]
+    - list:
+      - listitem:
+        - link "Dzhudezmo / לאדינו":
+          - /url: //lad.wikipedia.org/
+      - listitem:
+        - link "Адыгэбзэ":
+          - /url: //kbd.wikipedia.org/
+      - listitem:
+        - link "Ænglisc":
+          - /url: //ang.wikipedia.org/
+      - listitem:
+        - link "Anarâškielâ":
+          - /url: //smn.wikipedia.org/
+      - listitem:
+        - link "अंगिका":
+          - /url: //anp.wikipedia.org/
+      - listitem:
+        - link "Аԥсшәа":
+          - /url: //ab.wikipedia.org/
+      - listitem:
+        - link "armãneashti":
+          - /url: //roa-rup.wikipedia.org/
+      - listitem:
+        - link "Arpitan":
+          - /url: //frp.wikipedia.org/
+      - listitem:
+        - link "atikamekw":
+          - /url: //atj.wikipedia.org/
+      - listitem:
+        - link "ܐܬܘܪܝܐ":
+          - /url: //arc.wikipedia.org/
+      - listitem:
+        - link "Avañe’ẽ":
+          - /url: //gn.wikipedia.org/
+      - listitem:
+        - link "Авар":
+          - /url: //av.wikipedia.org/
+      - listitem:
+        - link "Aymar":
+          - /url: //ay.wikipedia.org/
+      - listitem:
+        - link "Batak Toba":
+          - /url: //bbc.wikipedia.org/
+      - listitem:
+        - link "Betawi":
+          - /url: //bew.wikipedia.org/
+      - listitem:
+        - link "भोजपुरी":
+          - /url: //bh.wikipedia.org/
+      - listitem:
+        - link "Bislama":
+          - /url: //bi.wikipedia.org/
+      - listitem:
+        - link "བོད་ཡིག":
+          - /url: //bo.wikipedia.org/
+      - listitem:
+        - link "Буряад":
+          - /url: //bxr.wikipedia.org/
+      - listitem:
+        - link "Chavacano de Zamboanga":
+          - /url: //cbk-zam.wikipedia.org/
+      - listitem:
+        - link "Chichewa":
+          - /url: //ny.wikipedia.org/
+      - listitem:
+        - link "Corsu":
+          - /url: //co.wikipedia.org/
+      - listitem:
+        - link "Vahcuengh / 話僮":
+          - /url: //za.wikipedia.org/
+      - listitem:
+        - link "Dagaare":
+          - /url: //dga.wikipedia.org/
+      - listitem:
+        - link "Davvisámegiella":
+          - /url: //se.wikipedia.org/
+      - listitem:
+        - link "Deitsch":
+          - /url: //pdc.wikipedia.org/
+      - listitem:
+        - link "ދިވެހިބަސް":
+          - /url: //dv.wikipedia.org/
+      - listitem:
+        - link "Dolnoserbski":
+          - /url: //dsb.wikipedia.org/
+      - listitem:
+        - link "Dusun Bundu-liwan":
+          - /url: //dtp.wikipedia.org/
+      - listitem:
+        - link "Эрзянь":
+          - /url: //myv.wikipedia.org/
+      - listitem:
+        - link "Estremeñu":
+          - /url: //ext.wikipedia.org/
+      - listitem:
+        - link "Eʋegbe":
+          - /url: //ee.wikipedia.org/
+      - listitem:
+        - link "Fɔ̀ngbè":
+          - /url: //fon.wikipedia.org/
+      - listitem:
+        - link "Fulfulde":
+          - /url: //ff.wikipedia.org/
+      - listitem:
+        - link "Furlan":
+          - /url: //fur.wikipedia.org/
+      - listitem:
+        - link "Gaelg":
+          - /url: //gv.wikipedia.org/
+      - listitem:
+        - link "Gagauz":
+          - /url: //gag.wikipedia.org/
+      - listitem:
+        - link "ГӀалгӀай":
+          - /url: //inh.wikipedia.org/
+      - listitem:
+        - link "Ghanaian Pidgin":
+          - /url: //gpe.wikipedia.org/
+      - listitem:
+        - link "Gĩkũyũ":
+          - /url: //ki.wikipedia.org/
+      - listitem:
+        - link "赣语 / 贛語":
+          - /url: //gan.wikipedia.org/
+      - listitem:
+        - link "Gungbe":
+          - /url: //guw.wikipedia.org/
+      - listitem:
+        - link "Хальмг":
+          - /url: //xal.wikipedia.org/
+      - listitem:
+        - link "ʻŌlelo Hawaiʻi":
+          - /url: //haw.wikipedia.org/
+      - listitem:
+        - link "Ikinyarwanda":
+          - /url: //rw.wikipedia.org/
+      - listitem:
+        - link "Jaku Iban":
+          - /url: //iba.wikipedia.org/
+      - listitem:
+        - link "Kabɩyɛ":
+          - /url: //kbp.wikipedia.org/
+      - listitem:
+        - link "Yerwa Kanuri":
+          - /url: //knc.wikipedia.org/
+      - listitem:
+        - link "Kaszëbsczi":
+          - /url: //csb.wikipedia.org/
+      - listitem:
+        - link "Kernewek":
+          - /url: //kw.wikipedia.org/
+      - listitem:
+        - link "Коми":
+          - /url: //kv.wikipedia.org/
+      - listitem:
+        - link "Перем коми":
+          - /url: //koi.wikipedia.org/
+      - listitem:
+        - link "Kongo":
+          - /url: //kg.wikipedia.org/
+      - listitem:
+        - link "कोंकणी / Konknni":
+          - /url: //gom.wikipedia.org/
+      - listitem:
+        - link "كٲشُر":
+          - /url: //ks.wikipedia.org/
+      - listitem:
+        - link "Kriyòl Gwiyannen":
+          - /url: //gcr.wikipedia.org/
+      - listitem:
+        - link "Kumoring":
+          - /url: //kge.wikipedia.org/
+      - listitem:
+        - link "Kʋsaal":
+          - /url: //kus.wikipedia.org/
+      - listitem:
+        - link "ພາສາລາວ":
+          - /url: //lo.wikipedia.org/
+      - listitem:
+        - link "Лакку":
+          - /url: //lbe.wikipedia.org/
+      - listitem:
+        - link "Latgaļu":
+          - /url: //ltg.wikipedia.org/
+      - listitem:
+        - link "Лезги":
+          - /url: //lez.wikipedia.org/
+      - listitem:
+        - link "Li Niha":
+          - /url: //nia.wikipedia.org/
+      - listitem:
+        - link "Lingála":
+          - /url: //ln.wikipedia.org/
+      - listitem:
+        - link "Lingua Franca Nova":
+          - /url: //lfn.wikipedia.org/
+      - listitem:
+        - link "livvinkarjala":
+          - /url: //olo.wikipedia.org/
+      - listitem:
+        - link "lojban":
+          - /url: //jbo.wikipedia.org/
+      - listitem:
+        - link "Luganda":
+          - /url: //lg.wikipedia.org/
+      - listitem:
+        - link "Madhurâ":
+          - /url: //mad.wikipedia.org/
+      - listitem:
+        - link "Malti":
+          - /url: //mt.wikipedia.org/
+      - listitem:
+        - link "Mandailing":
+          - /url: //btm.wikipedia.org/
+      - listitem:
+        - link "Māori":
+          - /url: //mi.wikipedia.org/
+      - listitem:
+        - link "Mirandés":
+          - /url: //mwl.wikipedia.org/
+      - listitem:
+        - link "Мокшень":
+          - /url: //mdf.wikipedia.org/
+      - listitem:
+        - link "ဘာသာ မန်":
+          - /url: //mnw.wikipedia.org/
+      - listitem:
+        - link "Moore":
+          - /url: //mos.wikipedia.org/
+      - listitem:
+        - link "ߒߞߏ":
+          - /url: //nqo.wikipedia.org/
+      - listitem:
+        - link "Na Vosa Vaka-Viti":
+          - /url: //fj.wikipedia.org/
+      - listitem:
+        - link "Nāhuatlahtōlli":
+          - /url: //nah.wikipedia.org/
+      - listitem:
+        - link "Naijá":
+          - /url: //pcm.wikipedia.org/
+      - listitem:
+        - link "Nedersaksisch":
+          - /url: //nds-nl.wikipedia.org/
+      - listitem:
+        - link "Nouormand / Normaund":
+          - /url: //nrm.wikipedia.org/
+      - listitem:
+        - link "Novial":
+          - /url: //nov.wikipedia.org/
+      - listitem:
+        - link "Afaan Oromoo":
+          - /url: //om.wikipedia.org/
+      - listitem:
+        - link "ပအိုဝ်ႏဘာႏသာႏ":
+          - /url: //blk.wikipedia.org/
+      - listitem:
+        - link "पालि":
+          - /url: //pi.wikipedia.org/
+      - listitem:
+        - link "Pangasinán":
+          - /url: //pag.wikipedia.org/
+      - listitem:
+        - link "Pangcah":
+          - /url: //ami.wikipedia.org/
+      - listitem:
+        - link "Papiamentu":
+          - /url: //pap.wikipedia.org/
+      - listitem:
+        - link "Patois":
+          - /url: //jam.wikipedia.org/
+      - listitem:
+        - link "Pfälzisch":
+          - /url: //pfl.wikipedia.org/
+      - listitem:
+        - link "Picard":
+          - /url: //pcd.wikipedia.org/
+      - listitem:
+        - link "Къарачай–малкъар":
+          - /url: //krc.wikipedia.org/
+      - listitem:
+        - link "Ripoarisch":
+          - /url: //ksh.wikipedia.org/
+      - listitem:
+        - link "Rumantsch":
+          - /url: //rm.wikipedia.org/
+      - listitem:
+        - link "Sakizaya":
+          - /url: //szy.wikipedia.org/
+      - listitem:
+        - link "Gagana Sāmoa":
+          - /url: //sm.wikipedia.org/
+      - listitem:
+        - link "Sardu":
+          - /url: //sc.wikipedia.org/
+      - listitem:
+        - link "Seediq":
+          - /url: //trv.wikipedia.org/
+      - listitem:
+        - link "Seeltersk":
+          - /url: //stq.wikipedia.org/
+      - listitem:
+        - link "Sesotho":
+          - /url: //st.wikipedia.org/
+      - listitem:
+        - link "Sesotho sa Leboa":
+          - /url: //nso.wikipedia.org/
+      - listitem:
+        - link "Setswana":
+          - /url: //tn.wikipedia.org/
+      - listitem:
+        - link "ꠍꠤꠟꠐꠤ":
+          - /url: //syl.wikipedia.org/
+      - listitem:
+        - link "Словѣ́ньскъ / ⰔⰎⰑⰂⰡⰐⰠⰔⰍⰟ":
+          - /url: //cu.wikipedia.org/
+      - listitem:
+        - link "Soomaaliga":
+          - /url: //so.wikipedia.org/
+      - listitem:
+        - link "Sranantongo":
+          - /url: //srn.wikipedia.org/
+      - listitem:
+        - link "SiSwati":
+          - /url: //ss.wikipedia.org/
+      - listitem:
+        - link "Reo tahiti":
+          - /url: //ty.wikipedia.org/
+      - listitem:
+        - link "Taqbaylit":
+          - /url: //kab.wikipedia.org/
+      - listitem:
+        - link "Tarandíne":
+          - /url: //roa-tara.wikipedia.org/
+      - listitem:
+        - link "Tayal":
+          - /url: //tay.wikipedia.org/
+      - listitem:
+        - link "Tetun":
+          - /url: //tet.wikipedia.org/
+      - listitem:
+        - link "Tok Pisin":
+          - /url: //tpi.wikipedia.org/
+      - listitem:
+        - link "tolışi":
+          - /url: //tly.wikipedia.org/
+      - listitem:
+        - link "faka Tonga":
+          - /url: //to.wikipedia.org/
+      - listitem:
+        - link "Türkmençe":
+          - /url: //tk.wikipedia.org/
+      - listitem:
+        - link "Twi":
+          - /url: //tw.wikipedia.org/
+      - listitem:
+        - link "Tyap":
+          - /url: //kcg.wikipedia.org/
+      - listitem:
+        - link "Тыва дыл":
+          - /url: //tyv.wikipedia.org/
+      - listitem:
+        - link "Удмурт":
+          - /url: //udm.wikipedia.org/
+      - listitem:
+        - link "ئۇيغۇرچه":
+          - /url: //ug.wikipedia.org/
+      - listitem:
+        - link "Vepsän":
+          - /url: //vep.wikipedia.org/
+      - listitem:
+        - link "võro":
+          - /url: //fiu-vro.wikipedia.org/
+      - listitem:
+        - link "West-Vlams":
+          - /url: //vls.wikipedia.org/
+      - listitem:
+        - link "Wolof":
+          - /url: //wo.wikipedia.org/
+      - listitem:
+        - link "isiXhosa":
+          - /url: //xh.wikipedia.org/
+      - listitem:
+        - link "Zeêuws":
+          - /url: //zea.wikipedia.org/
+      - listitem:
+        - link "алтай тил":
+          - /url: //alt.wikipedia.org/
+      - listitem:
+        - link "अवधी":
+          - /url: //awa.wikipedia.org/
+      - listitem:
+        - link "डोटेली":
+          - /url: //dty.wikipedia.org/
+      - listitem:
+        - link "ತುಳು":
+          - /url: //tcy.wikipedia.org/
+    - heading "100+ articles" [level=2]
+    - list:
+      - listitem:
+        - link "Bajau Sama":
+          - /url: //bdr.wikipedia.org/
+      - listitem:
+        - link "Bamanankan":
+          - /url: //bm.wikipedia.org/
+      - listitem:
+        - link "Chamoru":
+          - /url: //ch.wikipedia.org/
+      - listitem:
+        - link "རྫོང་ཁ":
+          - /url: //dz.wikipedia.org/
+      - listitem:
+        - link "Farefare":
+          - /url: //gur.wikipedia.org/
+      - listitem:
+        - link "𐌲𐌿𐍄𐌹𐍃𐌺":
+          - /url: //got.wikipedia.org/
+      - listitem:
+        - link "Igala":
+          - /url: //igl.wikipedia.org/
+      - listitem:
+        - link "ᐃᓄᒃᑎᑐᑦ / Inuktitut":
+          - /url: //iu.wikipedia.org/
+      - listitem:
+        - link "Iñupiak":
+          - /url: //ik.wikipedia.org/
+      - listitem:
+        - link "isiNdebele seSewula":
+          - /url: //nr.wikipedia.org/
+      - listitem:
+        - link "Kalaallisut":
+          - /url: //kl.wikipedia.org/
+      - listitem:
+        - link "Mfantse":
+          - /url: //fat.wikipedia.org/
+      - listitem:
+        - link "Nupe":
+          - /url: //nup.wikipedia.org/
+      - listitem:
+        - link "Obolo":
+          - /url: //ann.wikipedia.org/
+      - listitem:
+        - link "pinayuanan":
+          - /url: //pwn.wikipedia.org/
+      - listitem:
+        - link "Ποντιακά":
+          - /url: //pnt.wikipedia.org/
+      - listitem:
+        - link "romani čhib":
+          - /url: //rmy.wikipedia.org/
+      - listitem:
+        - link "Ikirundi":
+          - /url: //rn.wikipedia.org/
+      - listitem:
+        - link "руски":
+          - /url: //rsk.wikipedia.org/
+      - listitem:
+        - link "Sängö":
+          - /url: //sg.wikipedia.org/
+      - listitem:
+        - link "ᥖᥭᥰᥖᥬᥳᥑᥨᥒᥰ":
+          - /url: //tdd.wikipedia.org/
+      - listitem:
+        - link "ትግርኛ":
+          - /url: //ti.wikipedia.org/
+      - listitem:
+        - link "Thuɔŋjäŋ":
+          - /url: //din.wikipedia.org/
+      - listitem:
+        - link "ᏣᎳᎩ":
+          - /url: //chr.wikipedia.org/
+      - listitem:
+        - link "Tsėhesenėstsestotse":
+          - /url: //chy.wikipedia.org/
+      - listitem:
+        - link "Xitsonga":
+          - /url: //ts.wikipedia.org/
+      - listitem:
+        - link "Tshivenḓa":
+          - /url: //ve.wikipedia.org/
+      - listitem:
+        - link "Wayuunaiki":
+          - /url: //guc.wikipedia.org/
+      - listitem:
+        - link "адыгабзэ":
+          - /url: //ady.wikipedia.org/
+    - link "Other languages":
+      - /url: https://meta.wikimedia.org/wiki/Special:MyLanguage/List_of_Wikipedias
+  - separator
+- contentinfo:
+  - text: Wikipedia is hosted by the Wikimedia Foundation, a non-profit organization that also hosts a range of other projects.
+  - link "You can support our work with a donation.":
+    - /url: https://donate.wikimedia.org/?wmf_medium=portal&wmf_campaign=portalFooter&wmf_source=portalFooter
+  - strong:
+    - link "Download Wikipedia for Android or iOS":
+      - /url: https://en.wikipedia.org/wiki/List_of_Wikipedia_mobile_applications
+  - paragraph: Save your favorite articles to read offline, sync your reading lists across devices and customize your reading experience with the official Wikipedia app.
+  - list:
+    - listitem:
+      - link "Google Play Store":
+        - /url: https://play.google.com/store/apps/details?id=org.wikipedia&referrer=utm_source%3Dportal%26utm_medium%3Dbutton%26anid%3Dadmob
+    - listitem:
+      - link "Apple App Store":
+        - /url: https://itunes.apple.com/app/apple-store/id324715238?pt=208305&ct=portal&mt=8
+  - navigation "Other projects":
+    - link "Commons Free media collection":
+      - /url: //commons.wikimedia.org/
+    - link "Wikivoyage Free travel guide":
+      - /url: //www.wikivoyage.org/
+    - link "Wiktionary Free dictionary":
+      - /url: //www.wiktionary.org/
+    - link "Wikibooks Free textbooks":
+      - /url: //www.wikibooks.org/
+    - link "Wikinews Free news source":
+      - /url: //www.wikinews.org/
+    - link "Wikidata Free knowledge base":
+      - /url: //www.wikidata.org/
+    - link "Wikiversity Free learning resources":
+      - /url: //www.wikiversity.org/
+    - link "Wikiquote Free quote compendium":
+      - /url: //www.wikiquote.org/
+    - link "MediaWiki Free & open wiki software":
+      - /url: //www.mediawiki.org/
+    - link "Wikisource Free content library":
+      - /url: //www.wikisource.org/
+    - link "Wikispecies Free species directory":
+      - /url: //species.wikimedia.org/
+    - link "Wikifunctions Free function library":
+      - /url: //www.wikifunctions.org/
+    - link "Meta-Wiki Community coordination & documentation":
+      - /url: //meta.wikimedia.org/
+  - separator
+  - paragraph:
+    - text: This page is available under the
+    - link "Creative Commons Attribution-ShareAlike License":
+      - /url: https://creativecommons.org/licenses/by-sa/4.0/
+    - text: •
+    - link "Terms of Use":
+      - /url: https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Terms_of_Use
+    - text: •
+    - link "Privacy Policy":
+      - /url: https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Privacy_policy
+```

@@ -1,0 +1,55 @@
+```json
+{
+  "Header": [
+    "Verify that the meta tags for description and viewport are correctly set when the page loads.",
+    "Check if the favicon is loaded correctly.",
+    "Verify that the title of the page is 'Wikipedia'.",
+    "Test if the CSS class 'js-enabled' is added to the HTML element on page load."
+  ],
+  "Central Logo and Tagline": [
+    "Verify that the central logo image is displayed correctly on desktop and mobile devices.",
+    "Check that the tagline 'The Free Encyclopedia' is displayed correctly.",
+    "Test that the tagline changes appropriately in different languages.",
+    "Ensure the logo is inverted in dark mode."
+  ],
+  "Top Languages Navigation": [
+    "Verify that clicking on top language links redirects to the corresponding Wikipedia page.",
+    "Test if the hover effect applies correctly to language links.",
+    "Ensure that the article count is displayed correctly for each language.",
+    "Validate that the top languages navigation section is responsive and adjusts layout on smaller screens."
+  ],
+  "Language Selection Dropdown": [
+    "Verify that the language selection dropdown is visible and functional.",
+    "Test if selecting a different language from the dropdown updates the search form's language.",
+    "Ensure that the selected language is highlighted in the dropdown.",
+    "Check that the dropdown hides and shows the language options correctly based on the screen size.",
+    "Test if the dropdown is disabled when JavaScript is turned off.",
+    "Ensure that the dropdown opens and closes correctly using keyboard navigation."
+  ],
+  "Search Container and Form": [
+    "Verify that the search input is focused automatically on page load.",
+    "Test entering a valid search term and ensure the form submission works as expected.",
+    "Check that entering an invalid search term (e.g., special characters only) triggers an appropriate error message or behavior.",
+    "Test if the search input field clears correctly when the cancel button is clicked.",
+    "Validate that the search button is clickable and redirects to the search results page.",
+    "Ensure that the search form is responsive and adjusts layout on smaller screens.",
+    "Test if the search suggestions dropdown appears and disappears correctly as the user types and clicks away."
+  ],
+  "All Languages Section": [
+    "Verify that the 'All languages' button is clickable and reveals the full language list.",
+    "Test if clicking the 'All languages' button toggles the visibility of the language list.",
+    "Check that the 'All languages' section is hidden by default and shown with a transition effect.",
+    "Ensure that the language list is scrollable and displays all languages without overflow issues.",
+    "Test if the language list adjusts correctly for right-to-left (RTL) languages.",
+    "Validate that the language list is accessible via keyboard navigation."
+  ],
+  "Footer": [
+    "Verify that the footer contains the correct text and links for 'Wikipedia is hosted by the Wikimedia Foundation' and 'support our work with a donation'.",
+    "Test if the links in the footer open in a new tab.",
+    "Ensure that the 'Other projects' section in the footer displays all relevant projects correctly.",
+    "Check that the icons for each project are displayed correctly and are responsive.",
+    "Verify that the links for downloading the Wikipedia app (Android and iOS) are functional and open the respective app stores.",
+    "Test if the footer is responsive and adjusts layout on smaller screens."
+  ]
+}
+```
