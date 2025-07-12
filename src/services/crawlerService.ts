@@ -1,16 +1,12 @@
 import { chromium } from "playwright";
-// import { generateTestsForPage } from "./aiService.js";
-// import { config } from "../config.js";
-// import {existsSync, mkdirSync} from "fs";
+import { dbService, DESTINATION } from "./dbService";
+import { scenariosService } from "./scenariosService";
+import { testGeneratorService } from "./testsGeneratorService";
 
 const visited = new Set();
 const queue: string[] = [];
 
-export async function crawlAndGenerateTests(startUrl: string) {
-  //   if (!existsSync(config.testDirectory)) {
-  //     mkdirSync(config.testDirectory);
-  //   }
-
+async function crawlAndGenerateTests(startUrl: string) {
   const browser = await chromium.launch();
   const context = await browser.newContext();
   const page = await context.newPage();
@@ -25,11 +21,14 @@ export async function crawlAndGenerateTests(startUrl: string) {
     try {
       await page.goto(currentUrl, { waitUntil: "networkidle" });
       const html = await page.content();
+      await dbService.write(DESTINATION.HTML, currentUrl, html);
 
-      // 1. Generate tests for the current page
-      // await generateTestsForPage(currentUrl, html);
+      const scenarios: string = await scenariosService.learnScenarios(
+        currentUrl,
+        html
+      );
+      await testGeneratorService.learnTests(currentUrl, html, scenarios);
 
-      // 2. Find all new links on the page
       const links = await page.$$eval("a", (anchors) =>
         anchors.map((anchor) => anchor.href)
       );
@@ -50,3 +49,7 @@ export async function crawlAndGenerateTests(startUrl: string) {
 
   await browser.close();
 }
+
+export const crawlAndGenerateTestsService = {
+  crawlAndGenerateTests,
+};

@@ -8,8 +8,9 @@
     "start": "tsc && node dist/index.js",
     "build:watch": "tsc --watch",
     "start:watch": "node --watch dist/index.js",
-    "test": "npx playwright test"
-
+    "test": "npx playwright test",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
@@ -18,8 +19,12 @@
     "@playwright/test": "^1.53.2",
     "@types/node": "^22.15.29",
     "@types/node-fetch": "^2.6.12",
+    "eslint": "^9.31.0",
+    "globals": "^16.3.0",
+    "jiti": "^2.4.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.36.0"
   },
   "dependencies": {
     "@types/node-cache": "^4.2.5",
