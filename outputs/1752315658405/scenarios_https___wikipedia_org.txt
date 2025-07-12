@@ -1,0 +1,53 @@
+```json
+{
+  "Page Load": [
+    "User opens the webpage, and the page loads successfully without any errors.",
+    "User opens the webpage in a browser without JavaScript enabled, and the page content is still accessible."
+  ],
+  "Title and Description": [
+    "User checks the page title, it correctly displays 'Wikipedia'.",
+    "User inspects the meta description tag, which contains a correct and concise description of Wikipedia."
+  ],
+  "Logo Display": [
+    "User sees the Wikipedia logo displayed prominently on the homepage.",
+    "User views the page in different resolutions, and the logo scales appropriately.",
+    "User accesses the page using a dark theme, and the logo is inverted to ensure visibility."
+  ],
+  "Search Functionality": [
+    "User enters a valid search term in the search box and clicks the search button, navigating to the search results page with the query parameter included.",
+    "User enters a very long search term and clicks the search button, the system handles the input gracefully without errors.",
+    "User enters special characters (e.g., @, #, $) in the search box and clicks the search button, the system either clears the input or provides a relevant error message.",
+    "User leaves the search box empty and clicks the search button, the system alerts the user to enter a search term or provides default search results.",
+    "User selects a language from the dropdown menu while entering a search term, the search form updates to reflect the selected language.",
+    "User focuses on the search input, the input field highlights, and the placeholder text changes to a more subtle color."
+  ],
+  "Language Navigation": [
+    "User clicks on one of the top 10 featured languages, and the page navigates to the respective Wikipedia site.",
+    "User hovers over a featured language, and the language link highlights, indicating that it is clickable.",
+    "User accesses the 'All Languages' section, and clicking on the button drops down a list of all available languages.",
+    "User clicks on a language in the 'All Languages' section with fewer than 1,000,000 articles, and the page navigates to the respective Wikipedia site.",
+    "User scrolls through the 'All Languages' section on a mobile device, and the list displays correctly without layout issues.",
+    "User searches for a specific language by typing in the search input within the 'All Languages' section, and the search filters the list appropriately."
+  ],
+  "Responsive Design": [
+    "User resizes the browser window to a mobile device width, and the layout adjusts to stack elements vertically.",
+    "User resizes the browser window to a desktop device width, and the layout adjusts to a horizontal display of the search form and language selector.",
+    "User rotates a mobile device from portrait to landscape, and the layout remains stable and functional."
+  ],
+  "Footer Links and Content": [
+    "User clicks on the 'Donate' link in the footer, and it opens the donation page in a new tab.",
+    "User clicks on the 'View Mobile Site' link, and it redirects to the mobile version of the Wikipedia site.",
+    "User clicks on the 'Other Projects' links in the footer, and each project link opens the corresponding project page in a new tab.",
+    "User hovers over the 'Download Wikipedia App' section, and the links to Google Play and Apple App Store are highlighted."
+  ],
+  "Localization and Internationalization": [
+    "User sets their browser language to a supported language, and the page content is localized accordingly.",
+    "User sets their browser language to a right-to-left (RTL) language like Arabic, and the page content and layout adjust to RTL.",
+    "User sets their browser language to a language not supported, and the page falls back to a default language (e.g., English)."
+  ],
+  "Accessibility Features": [
+    "User uses screen reader software, and the 'Skip to main content' link allows direct navigation to the main content.",
+    "User tabs through the page, and the focus is visible on interactive elements (e.g., search button, language selector button)."
+  ]
+}
+```
