@@ -14,7 +14,7 @@ const DestinationToPath: DestinationToPathType = {
   [DESTINATION.SCENARIOS]: (url: string): string =>
     path.join(currentDir, "outputs/", `${nowTime}`, `scenarios_${url}.txt`),
   [DESTINATION.TESTS]: (url: string): string =>
-    path.join(currentDir, "src/tests/", `tests_${url}.spec.ts`),
+    path.join(currentDir, "tests/", `tests_${url}.spec.ts`),
 };
 
 async function write(destination: DESTINATION, url: string, data: string) {
