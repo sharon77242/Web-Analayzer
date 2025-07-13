@@ -38,3 +38,17 @@ export interface PromptType {
   role: string;
   content: string;
 }
+
+export interface RequestHeaders {
+  "Content-Type": "application/json";
+  Authorization: string;
+  [key: string]: string; // Allows for extra headers like those from OpenRouter
+}
+
+export interface ProviderConfig {
+  apiProvider: string;
+  apiUrl: string;
+  modelId: string;
+  apiToken: string | undefined; // process.env can be undefined
+  extraHeaders?: Record<string, string>;
+}

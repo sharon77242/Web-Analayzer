@@ -45,6 +45,14 @@ class PromptHistoryService {
     );
   }
 
+  async clearAll() {
+    this.historyQueue = [];
+    await dbService.write(
+      DESTINATION.PROMPT_HISTORY,
+      JSON.stringify([...this.historyQueue])
+    );
+  }
+
   async loadMessages() {
     const result = await dbService.read(DESTINATION.PROMPT_HISTORY);
     if (!result) throw new ThrowingError("Prompt History File does not exists");

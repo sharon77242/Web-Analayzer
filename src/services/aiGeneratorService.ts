@@ -2,16 +2,29 @@ import {
   generateTestsPrompt,
   URL_STORE,
   retryGenerateTestsPrompt,
+  scenariosPrompt,
+  loadHistory,
 } from "../config";
 import globalStore from "../globalStore";
 import { logInfo } from "../logger";
 import { ThrowingError } from "../types";
 import { getPackageVersion } from "../utils";
-import { aIService } from "./aIService";
+import { aIProxy } from "./aIProxy";
 import { dbService, DESTINATION } from "./dbService";
+import { promptHistoryService } from "./promptHistoryService";
+import { testRunnerService } from "./testRunnerService";
+
+async function generateScenarios(html: string): Promise<string> {
+  const url = globalStore[URL_STORE];
+  await logInfo("sending model to learn scenarios for url: ", url);
+  const scenarios: string = await aIProxy.prompt(scenariosPrompt(html));
+  await logInfo("model learned from scenarios", { url, scenarios });
+  await dbService.write(DESTINATION.SCENARIOS, scenarios);
+  return scenarios;
+}
 
 async function baseLearnTests(promptContent: string) {
-  const response = await aIService.learn(promptContent);
+  const response = await aIProxy.prompt(promptContent);
   const cleanedContent = response
     // Use a regular expression to find and remove the opening fence (e.g., ```typescript)
     .replace(/^```(typescript|javascript)?\n/, "")
@@ -26,7 +39,7 @@ async function baseLearnTests(promptContent: string) {
   return cleanedContent;
 }
 
-async function learnTests() {
+async function generateTests() {
   const url = globalStore[URL_STORE];
 
   await logInfo("sending model to learn tests for url: ", url);
@@ -43,7 +56,7 @@ async function learnTests() {
   );
 }
 
-async function retryLearningTests(testsOutput: string) {
+async function retryGenerateTests(testsOutput: string) {
   const url = globalStore[URL_STORE];
   const testsCode = await dbService.read(DESTINATION.TESTS);
   if (!testsCode) throw new ThrowingError("Tests code File does not exists");
@@ -55,4 +68,23 @@ async function retryLearningTests(testsOutput: string) {
   return baseLearnTests(retryGenerateTestsPrompt(testsOutput, testsCode, html));
 }
 
-export const testGeneratorService = { learnTests, retryLearningTests };
+async function generateTestsForPage(html: string) {
+  if (loadHistory) {
+    await promptHistoryService.loadMessages();
+  } else {
+    await generateScenarios(html);
+    await generateTests();
+  }
+  let testResults = await testRunnerService.runTests();
+  let times = 1;
+  while (!testResults.success && times <= 10) {
+    await promptHistoryService.clearAll();
+    await logInfo("retry tests generation times:", times++);
+    await retryGenerateTests(testResults.output);
+    testResults = await testRunnerService.runTests();
+  }
+}
+
+export const aiGeneratorService = {
+  generateTestsForPage,
+};

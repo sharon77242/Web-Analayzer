@@ -1,11 +1,39 @@
-export const loadHistory = false;
+import type { ProviderConfig } from "./types";
+import * as dotenv from "dotenv";
+dotenv.config();
+
+export const loadHistory = process.env.LOAD_HISTORY === "true";
 export const rootPage = "https://wikipedia.org";
 export const nowTime = new Date().getTime();
 export const currentDir = process.cwd();
-//export const MODEL_ID = "Qwen/Qwen2.5-72B-Instruct";
-export const MODEL_ID = "deepseek-ai/DeepSeek-V3";
-export const API_URL = "https://router.huggingface.co/v1/chat/completions";
 export const URL_STORE = "url";
+
+const USE_OPENROUTER = process.env.USE_OPENROUTER === "true";
+
+// --- Provider Configurations ---
+const huggingFaceConfig: ProviderConfig = {
+  apiProvider: "Hugging Face",
+  apiUrl: "https://router.huggingface.co/v1/chat/completions",
+  modelId: "Qwen/Qwen2-72B-Instruct",
+  apiToken: process.env.HUGGINGFACE_TOKEN,
+};
+
+const openRouterConfig: ProviderConfig = {
+  apiProvider: "OpenRouter",
+  apiUrl: "https://openrouter.ai/api/v1/chat/completions",
+  modelId: "deepseek/deepseek-r1-0528:free",
+  apiToken: process.env.OPENROUTER_API_KEY,
+  // OpenRouter requires these headers for identification.
+  extraHeaders: {
+    "HTTP-Referer": "http://localhost:3000", // Replace with your app's URL
+    "X-Title": "website-analyzer", // Replace with your app's name
+  },
+};
+
+export const modelConfig: ProviderConfig = USE_OPENROUTER
+  ? openRouterConfig
+  : huggingFaceConfig;
+
 export const scenariosPrompt = (html: string): string => `
 You are an expert QA analyst. Your task is to analyze the following HTML and generate comprehensive test scenarios for all interactive features.
 

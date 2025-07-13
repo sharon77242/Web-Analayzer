@@ -1,9 +1,9 @@
 import { chromium } from "playwright";
 import { dbService, DESTINATION } from "./dbService";
 import { logError, logInfo } from "../logger";
-import { testGeneratorManager } from "../testGeneratorManager";
 import { URL_STORE } from "../config";
 import globalStore from "../globalStore";
+import { aiGeneratorService } from "./aiGeneratorService";
 
 const visited = new Set<string>();
 const queue: string[] = [];
@@ -20,17 +20,16 @@ function normalizeUrl(url: string): string {
     const urlObject = new URL(url);
     urlObject.hash = ""; // Remove the #fragment
     let normalized = urlObject.href;
-    if (normalized.endsWith('/')) {
+    if (normalized.endsWith("/")) {
       normalized = normalized.slice(0, -1);
     }
     return normalized;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     // Return the original string if it's not a valid URL (e.g., mailto:)
     return url;
   }
 }
-
 
 async function learnWebsite(startUrl: string) {
   const browser = await chromium.launch();
@@ -51,7 +50,7 @@ async function learnWebsite(startUrl: string) {
       await page.goto(currentUrl, { waitUntil: "networkidle" });
       const html = await page.content();
       await dbService.write(DESTINATION.HTML, html);
-      await testGeneratorManager.learnPage(html);
+      await aiGeneratorService.generateTestsForPage(html);
 
       const links = await page.$$eval("a", (anchors) =>
         anchors.map((anchor) => anchor.href)
@@ -62,7 +61,7 @@ async function learnWebsite(startUrl: string) {
       for (const link of links) {
         // Normalize every link before checking it.
         const normalizedLink = normalizeUrl(link);
-        
+
         // Use a try-catch to handle potentially invalid URLs from href attributes
         try {
           if (
@@ -74,7 +73,7 @@ async function learnWebsite(startUrl: string) {
             queue.push(normalizedLink);
             await logInfo("Found new link, adding to queue", normalizedLink);
           }
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
           // Ignore invalid links like 'mailto:' or 'javascript:...'
         }

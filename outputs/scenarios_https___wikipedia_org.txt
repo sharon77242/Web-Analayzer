@@ -1,73 +1,42 @@
-```json
 {
   "SearchForm": [
-    "Verify that the search input field is present and can be focused.",
-    "Enter a valid search term and press Enter; expect the page to redirect to the search results page.",
-    "Enter a valid search term and click the search button; expect the page to redirect to the search results page.",
-    "Enter an invalid search term and press Enter; expect no action or an error message.",
-    "Enter an invalid search term and click the search button; expect no action or an error message.",
-    "Verify that the search input field has an autocomplete feature.",
-    "Verify that the search input field has a placeholder text 'Search Wikipedia'.",
-    "Verify that the search input field has an access key 'F'.",
-    "Verify that the search input field is responsive and adapts to different screen sizes."
+    "Positive: Enter a search term 'Quantum mechanics' and click search button; expect redirect to search results page for that term.",
+    "Positive: Enter search term 'Helium' and press Enter key; expect redirect to search results page.",
+    "Negative: Submit empty search form; expect redirection to main page of selected language Wikipedia."
   ],
-  "LanguageSelectDropdown": [
-    "Verify that the language select dropdown is present and can be clicked.",
-    "Select a different language from the dropdown; expect the selected language to change.",
-    "Verify that the default selected language is 'English'.",
-    "Verify that the dropdown contains all available languages.",
-    "Verify that the dropdown is responsive and adapts to different screen sizes."
+  "LanguageSelectionDropdown": [
+    "Positive: Select 'Español' from dropdown and search 'Sol'; expect redirect to es.wikipedia.org search results.",
+    "Positive: Select '日本語' and submit empty search; expect redirect to ja.wikipedia.org main page.",
+    "Negative: Select invalid option; expect default fallback to English or error prevention (though UI constraints prevent invalid selections)."
   ],
-  "AllLanguagesButton": [
-    "Verify that the 'Read Wikipedia in your language' button is present and can be clicked.",
-    "Click the 'Read Wikipedia in your language' button; expect the language list to expand.",
-    "Click the 'Read Wikipedia in your language' button again; expect the language list to collapse.",
-    "Verify that the expanded language list contains all available languages.",
-    "Verify that clicking a language in the expanded list redirects to the respective Wikipedia page."
+  "TypeaheadSuggestions": [
+    "Positive: Type 'App' into search field; expect dropdown appears with relevant suggestions like 'Apple'.",
+    "Positive: Click suggestion 'Apple Inc.'; expect direct navigation to Apple Inc. article.",
+    "Negative: Type special characters '###'; expect 'No results' message in dropdown or empty suggestion list."
   ],
-  "TopLanguagesNavigation": [
-    "Verify that the top languages navigation section is present.",
-    "Click on a top language link; expect to be redirected to the respective Wikipedia page.",
-    "Verify that the top languages section displays the correct number of articles for each language.",
-    "Verify that the top languages navigation is responsive and adapts to different screen sizes."
+  "LanguageListButton": [
+    "Positive: Click 'Read Wikipedia in your language' button; expect language list container to expand.",
+    "Positive: Click button again when expanded; expect language list container to collapse.",
+    "Negative: Repeated rapid clicks; expect stable toggle behavior without UI breakage."
   ],
-  "FooterLinks": [
-    "Verify that all footer links are present and accessible.",
-    "Click on the 'Commons' link; expect to be redirected to the Wikimedia Commons page.",
-    "Click on the 'Wikivoyage' link; expect to be redirected to the Wikivoyage page.",
-    "Click on the 'Wiktionary' link; expect to be redirected to the Wiktionary page.",
-    "Click on the 'Wikibooks' link; expect to be redirected to the Wikibooks page.",
-    "Click on the 'Wikinews' link; expect to be redirected to the Wikinews page.",
-    "Click on the 'Wikidata' link; expect to be redirected to the Wikidata page.",
-    "Click on the 'Wikiversity' link; expect to be redirected to the Wikiversity page.",
-    "Click on the 'Wikiquote' link; expect to be redirected to the Wikiquote page.",
-    "Click on the 'MediaWiki' link; expect to be redirected to the MediaWiki page.",
-    "Click on the 'Wikisource' link; expect to be redirected to the Wikisource page.",
-    "Click on the 'Wikispecies' link; expect to be redirected to the Wikispecies page.",
-    "Click on the 'Wikifunctions' link; expect to be redirected to the Wikifunctions page.",
-    "Click on the 'Meta-Wiki' link; expect to be redirected to the Meta-Wiki page.",
-    "Verify that the footer links are responsive and adapts to different screen sizes."
+  "TopLanguageLinks": [
+    "Positive: Click English language link; expect navigation to en.wikipedia.org.",
+    "Positive: Click 日本語 link; expect navigation to ja.wikipedia.org.",
+    "Negative: Check broken link via developer tools; expect valid href attribute and 200 status."
   ],
-  "AppDownloadLinks": [
-    "Verify that the Android app download link is present and can be clicked.",
-    "Click the Android app download link; expect to be redirected to the Google Play Store.",
-    "Verify that the iOS app download link is present and can be clicked.",
-    "Click the iOS app download link; expect to be redirected to the Apple App Store.",
-    "Verify that the app download links are responsive and adapt to different screen sizes."
+  "OtherProjectsLinks": [
+    "Positive: Click 'Commons' project link; expect navigation to commons.wikimedia.org.",
+    "Positive: Click 'Wikidata' link; expect navigation to wikidata.org.",
+    "Negative: Hover over disabled-looking icon; verify no broken images via alt text inspection."
   ],
-  "DonationLink": [
-    "Verify that the donation link is present and can be clicked.",
-    "Click the donation link; expect to be redirected to the donation page.",
-    "Verify that the donation link is responsive and adapts to different screen sizes."
+  "AppDownloadBadges": [
+    "Positive: Click Google Play badge; expect new tab opens to play.google.com/store/apps/details?id=org.wikipedia.",
+    "Positive: Click App Store badge; expect new tab opens to apps.apple.com/app/wikipedia/id324715238.",
+    "Negative: Disable JavaScript; verify links remain functional via href attribute inspection."
   ],
-  "LicenseAndTermsLinks": [
-    "Verify that the Creative Commons license link is present and can be clicked.",
-    "Click the Creative Commons license link; expect to be redirected to the license page.",
-    "Verify that the Terms of Use link is present and can be clicked.",
-    "Click the Terms of Use link; expect to be redirected to the Terms of Use page.",
-    "Verify that the Privacy Policy link is present and can be clicked.",
-    "Click the Privacy Policy link; expect to be redirected to the Privacy Policy page.",
-    "Verify that the license and terms links are responsive and adapt to different screen sizes."
+  "LicenseAndPolicyLinks": [
+    "Positive: Click 'Creative Commons... License' link; expect navigation to creativecommons.org/licenses/by-sa/4.0/.",
+    "Positive: Click 'Privacy Policy' link; expect navigation to foundation.wikimedia.org policy page.",
+    "Negative: Check link accessibility; verify contrast ratios meet WCAG standards via tools."
   ]
 }
-```
