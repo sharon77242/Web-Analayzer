@@ -14,7 +14,8 @@ async function learnPage(html: string) {
   }
   let testResults = await testRunnerService.runTests();
   let times = 1;
-  while (!testResults.success) {
+  while (!testResults.success && times <= 3) {
+    await promptHistoryService.dequeuMessages(2);
     await logInfo("retry tests generation times:", times++);
     await testGeneratorService.retryLearningTests(testResults.output);
     testResults = await testRunnerService.runTests();

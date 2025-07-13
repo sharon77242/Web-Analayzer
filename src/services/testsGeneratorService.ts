@@ -5,6 +5,7 @@ import {
 } from "../config";
 import globalStore from "../globalStore";
 import { logInfo } from "../logger";
+import { ThrowingError } from "../types";
 import { getPackageVersion } from "../utils";
 import { aIService } from "./aIService";
 import { dbService, DESTINATION } from "./dbService";
@@ -36,10 +37,14 @@ async function learnTests() {
 
 async function retryLearningTests(testsOutput: string) {
   const url = globalStore[URL_STORE];
+  const testsCode = await dbService.read(DESTINATION.TESTS);
+  if (!testsCode) throw new ThrowingError("Tests code File does not exists");
 
+  const html = await dbService.read(DESTINATION.HTML);
+  if (!html) throw new ThrowingError("html File does not exists");
   await logInfo("retry model to learn tests for url: ", url);
 
-  return baseLearnTests(retryGenerateTestsPrompt(testsOutput));
+  return baseLearnTests(retryGenerateTestsPrompt(testsOutput, testsCode, html));
 }
 
 export const testGeneratorService = { learnTests, retryLearningTests };

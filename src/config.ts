@@ -1,8 +1,9 @@
-export const loadHistory = true;
+export const loadHistory = false;
 export const rootPage = "https://wikipedia.org";
 export const nowTime = new Date().getTime();
 export const currentDir = process.cwd();
-export const MODEL_ID = "Qwen/Qwen2.5-72B-Instruct";
+//export const MODEL_ID = "Qwen/Qwen2.5-72B-Instruct";
+export const MODEL_ID = "deepseek-ai/DeepSeek-V3";
 export const API_URL = "https://router.huggingface.co/v1/chat/completions";
 export const URL_STORE = "url";
 export const scenariosPrompt = (
@@ -15,6 +16,7 @@ export const scenariosPrompt = (
 3.  Each scenario should describe a user action and the expected outcome.
 4.  Include scenarios for both valid (happy path) and invalid (error case) user actions.
 5.  Return ONLY the output as a single, valid JSON object. The keys of the object should be the feature names, and the value for each key should be an array of strings, where each string is a test scenario.
+6.  Do not include any explanations, comments
 
 **HTML to Analyze:**
 ${html}`;
@@ -53,14 +55,26 @@ test('should allow a user to search for a model', async ({ page }) => {
 \`\`\`
 `;
 
-export const retryGenerateTestsPrompt = (testsOutput: string): string => `
-You are an expert debugging and test automation engineer. The Playwright tests, which you previously wrote, has failed during execution. Your task is to analyze the error, identify the bug in the code, and provide a corrected, fully functional version of the tests.
+export const retryGenerateTestsPrompt = (
+  testsOutput: string,
+  testsCode: string,
+  htmlContext: string
+): string => `
+You are an expert debugging and test automation engineer. The following Playwright test file, which you previously wrote, has failed during execution. Your task is to analyze the error, identify the bug in the code by cross-referencing with the original HTML, and provide a corrected, fully functional version of the entire test file.
 
 **Instructions:**
-1.  **Analyze the Error:** Carefully read the "Test Runner Error Log" to understand why the test failed. The error is often related to an incorrect locator, a timing issue, or a flawed assertion.
-2.  **Correct the Code:** Rewrite the provided "Failing Test Code" to fix the bug. Pay close attention to using resilient, user-facing locators and adding waits where necessary.
-3.  **Return ONLY Code:** Your final output must be ONLY the full, corrected TypeScript code for the tests file (both those you fixed and also those that was there before). Do not include any explanations, comments, or markdown formatting.
+1.  **Analyze the Error Log & HTML:** Carefully read the "Test Runner Error Log" and compare it against the "Original Test Code" and the "HTML Context". The error is often a locator that doesn't match the HTML.
+2.  **Correct the Code:** Rewrite the provided "Original Test Code" to fix all the bugs identified in the error log. Prioritize creating resilient, user-facing locators that accurately reflect the provided HTML.
+3.  **Preserve Passing Tests:** The final output MUST include the full, corrected TypeScript code for the entire test file. Tests that were not mentioned in the error log should be considered "passing" and must be returned unchanged.
+4.  **Return ONLY Code:** Do not include any explanations, comments, or markdown formatting in your final output.
 
+---
+
+### Original Test Code
+
+\`\`\`typescript
+${testsCode}
+\`\`\`
 
 ---
 
@@ -70,4 +84,11 @@ You are an expert debugging and test automation engineer. The Playwright tests, 
 ${testsOutput}
 \`\`\`
 
+---
+
+### HTML Context
+
+\`\`\`html
+${htmlContext}
+\`\`\`
 `;

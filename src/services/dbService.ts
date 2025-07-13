@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
-import { currentDir, nowTime, URL_STORE } from "../config";
+import { currentDir, URL_STORE } from "../config";
 import { type DestinationToPathType } from "../types";
 import globalStore from "../globalStore";
 
@@ -12,9 +12,9 @@ export enum DESTINATION {
 }
 const DestinationToPath: DestinationToPathType = {
   [DESTINATION.HTML]: (url: string): string =>
-    path.join(currentDir, "outputs/", `${nowTime}`, `html_${url}.txt`),
+    path.join(currentDir, "outputs/", `html_${url}.txt`),
   [DESTINATION.SCENARIOS]: (url: string): string =>
-    path.join(currentDir, "outputs/", `${nowTime}`, `scenarios_${url}.txt`),
+    path.join(currentDir, "outputs/", `scenarios_${url}.txt`),
   [DESTINATION.TESTS]: (url: string): string =>
     path.join(currentDir, "tests/", `tests_${url}.spec.ts`),
   [DESTINATION.PROMPT_HISTORY]: (url: string): string =>
@@ -44,8 +44,7 @@ async function read(destination: DESTINATION): Promise<string | null> {
   const path: string = DestinationToPath[destination](safeUrl);
 
   try {
-    const result = await fs.readFile(path, "utf-8");
-    return JSON.parse(result) as string;
+    return await fs.readFile(path, "utf-8");
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     return null;

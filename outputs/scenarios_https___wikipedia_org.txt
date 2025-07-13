@@ -1,0 +1,40 @@
+```json
+{
+  "Search Bar": [
+    "User enters a valid search term and presses Enter; expected: redirects to the search results page.",
+    "User enters a search term with special characters; expected: search is handled gracefully and relevant results are shown.",
+    "User leaves the search bar empty and presses Enter; expected: no action or a prompt to enter a search term.",
+    "User selects a different language from the dropdown and performs a search; expected: search is conducted in the selected language."
+  ],
+  "Language Selection": [
+    "User selects a language from the dropdown; expected: the search language is updated to the selected language.",
+    "User clicks on the language dropdown but does not select a language; expected: the dropdown closes without changes.",
+    "User selects a language with a right-to-left script; expected: the page layout adjusts to support right-to-left text."
+  ],
+  "Top Languages Section": [
+    "User clicks on a language link; expected: redirected to the Wikipedia page in the selected language.",
+    "User hovers over a language link; expected: a tooltip or preview of the Wikipedia page in the selected language is shown.",
+    "User accesses the page on a mobile device; expected: the top languages section is displayed in a mobile-friendly layout."
+  ],
+  "All Languages Section": [
+    "User clicks on 'Read Wikipedia in your language'; expected: the list of all languages expands.",
+    "User selects a language from the expanded list; expected: redirected to the Wikipedia page in the selected language.",
+    "User searches for a specific language in the search bar within the expanded list; expected: the list filters to show matching languages."
+  ],
+  "Footer and Other Projects": [
+    "User clicks on a link in the 'Other Projects' section; expected: redirected to the respective project page.",
+    "User clicks on the 'Download Wikipedia for Android or iOS' link; expected: redirected to the app download page.",
+    "User clicks on the 'Donate' link; expected: redirected to the donation page for the Wikimedia Foundation."
+  ],
+  "Responsive Design": [
+    "User resizes the browser window; expected: the page layout adjusts to fit the new window size.",
+    "User accesses the page on a mobile device; expected: the layout is optimized for mobile viewing with collapsible menus and readable text.",
+    "User rotates their mobile device; expected: the layout adjusts to the new orientation without breaking."
+  ],
+  "Accessibility": [
+    "User navigates the page using only the keyboard; expected: all interactive elements are accessible and can be activated.",
+    "User uses a screen reader to navigate the page; expected: all elements are read aloud correctly and provide meaningful context.",
+    "User increases the font size in their browser settings; expected: the page layout adjusts to accommodate larger text without overlapping elements."
+  ]
+}
+```

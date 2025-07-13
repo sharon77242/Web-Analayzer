@@ -37,12 +37,21 @@ class PromptHistoryService {
     return [...this.historyQueue];
   }
 
+  async dequeuMessages(count: number) {
+    for (let i = 0; i < count; i++) this.historyQueue.shift();
+    await dbService.write(
+      DESTINATION.PROMPT_HISTORY,
+      JSON.stringify([...this.historyQueue])
+    );
+  }
+
   async loadMessages() {
-    const result = (await dbService.read(
-      DESTINATION.PROMPT_HISTORY
-    )) as unknown as PromptType[];
+    const result = await dbService.read(DESTINATION.PROMPT_HISTORY);
     if (!result) throw new ThrowingError("Prompt History File does not exists");
-    this.historyQueue.push(...result);
+    const parsedResult = JSON.parse(result) as PromptType[];
+    if (!parsedResult) throw new ThrowingError("Prompt History parsing failed");
+
+    this.historyQueue.push(...parsedResult);
     await logInfo("loaded prompt from history");
   }
 }
