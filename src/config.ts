@@ -6,74 +6,102 @@ export const currentDir = process.cwd();
 export const MODEL_ID = "deepseek-ai/DeepSeek-V3";
 export const API_URL = "https://router.huggingface.co/v1/chat/completions";
 export const URL_STORE = "url";
-export const scenariosPrompt = (
-  html: string
-): string => `You are an expert QA analyst. Your task is to analyze the following HTML and generate comprehensive test scenarios.
+export const scenariosPrompt = (html: string): string => `
+You are an expert QA analyst. Your task is to analyze the following HTML and generate comprehensive test scenarios for all interactive features.
 
 **Instructions:**
-1.  Carefully examine the HTML to identify the most important user-facing features.
-2.  For each identified feature, create a list of test scenarios.
-3.  Each scenario should describe a user action and the expected outcome.
-4.  Include scenarios for both valid (happy path) and invalid (error case) user actions.
-5.  Return ONLY the output as a single, valid JSON object. The keys of the object should be the feature names, and the value for each key should be an array of strings, where each string is a test scenario.
-6.  Do not include any explanations, comments
+1.  Analyze the HTML to identify all key user-facing features that a user can interact with. Focus on forms, buttons, links, search bars, and navigation menus.
+2.  For each feature, create a list of test scenarios covering its core functionality.
+3.  Each scenario must clearly describe a user action and the expected, verifiable outcome.
+4.  Include both positive "happy path" scenarios and negative "error case" scenarios.
+5.  Return ONLY a single, valid JSON object. Do not add any explanatory text before or after the JSON.
+6.  The keys of the JSON object must be the feature names (e.g., "LoginForm"), and the value for each key must be an array of the scenario strings.
 
 **HTML to Analyze:**
-${html}`;
+${html}
+`;
 
-export const generateTestsPrompt = (playwrightVersion: string): string => `
-By the context (html and scenarios) you are given, now you are an expert test automation engineer specializing in Playwright. Your task is to write test for each scenario, executable Playwright tests based on the provided scenarios and HTML context.
+export const generateTestsPrompt = (
+  scenarios: string, // Expects a JSON string of the scenarios from the previous step
+  html: string,
+  playwrightVersion: string
+): string => `
+You are an expert test automation engineer specializing in Playwright. Your task is to write a full test suite in a single file based on the provided list of test scenarios and the HTML context.
 
 **Instructions:**
-1.  **Follow Best Practices:** Write a clean, readable, and resilient tests compatible with Playwright version: ${playwrightVersion}.
-2.  **Use User-Facing Locators:** You MUST prioritize user-facing locators in this order: \`getByRole\`, \`getByText\`, \`getByLabel\`, \`getByPlaceholder\`. Only use CSS selectors or \`test-id\` as a last resort.
-3.  **Follow the Example:** The generated test MUST follow the style, structure, and patterns of the high-quality example provided below.
-4.  **Implement the Scenario:** The test must accurately implement the user action and expected outcome described in the "Test Scenario to Implement".
-5.  **Return ONLY Code:** Your final output must be ONLY the TypeScript code for the test. Do not include any explanations, comments, or markdown formatting.
-
+1.  **One Test Per Scenario:** You MUST iterate through every scenario in the provided JSON. For each individual scenario string, you must generate exactly one corresponding \`test()\` block that implements it. The test name should be descriptive and based on the scenario.
+2.  **Group Tests:** Group related tests for a single feature inside a \`test.describe()\` block.
+3.  **Follow Best Practices:** Write clean, readable, and resilient tests compatible with Playwright version: ${playwrightVersion}.
+4.  **Use User-Facing Locators:** You MUST prioritize user-facing locators in this order: \`getByRole\`, \`getByText\`, \`getByLabel\`. Use CSS selectors only as a last resort.
+5.  **Follow the Example:** The generated test file MUST follow the style and structure of the high-quality example provided below.
+6.  **Return ONLY Code:** Your final output must be ONLY the TypeScript code for the test file without any explnations or comments.
+7.  **Ensure all Scenario exists:** You MUST ensure all scenarios exists and its valid via syntax.
 ---
 
 ### High-Quality Example
 
-Here is an example of a perfect Playwright test. Use this as your guide for structure and style.
-
 \`\`\`typescript
 import { test, expect } from '@playwright/test';
 
-test('should allow a user to search for a model', async ({ page }) => {
-  // Arrange: Go to the page
-  await page.goto('https://huggingface.co');
+test.describe('Search Functionality', () => {
+  test('should allow a user to search for a known model', async ({ page }) => {
+    // Arrange
+    await page.goto('https://huggingface.co');
+    // Act
+    await page.getByRole('searchbox', { name: 'Search models, datasets, and spaces' }).fill('Qwen2');
+    await page.keyboard.press('Enter');
+    // Assert
+    await expect(page).toHaveURL(/.*models\\?search=Qwen2/);
+    await expect(page.getByText('Qwen/Qwen2.5-72B-Instruct')).toBeVisible();
+  });
 
-  // Act: Fill the search bar and press Enter
-  await page.getByRole('searchbox', { name: 'Search models, datasets, and spaces' }).fill('Qwen2');
-  await page.keyboard.press('Enter');
-
-  // Assert: Verify the user is on the results page and the model is visible
-  await expect(page).toHaveURL(/.*models\\?search=Qwen2/);
-  await expect(page.getByText('Qwen/Qwen2-72B-Instruct')).toBeVisible();
+  test('should show a "no results" message for a nonsense search', async ({ page }) => {
+    // Arrange
+    await page.goto('https://huggingface.co');
+    // Act
+    await page.getByRole('searchbox', { name: 'Search models, datasets, and spaces' }).fill('asdfghjklqwerty');
+    await page.keyboard.press('Enter');
+    // Assert
+    await expect(page.getByText(/results for asdfghjklqwerty/)).toBeVisible();
+  });
 });
+\`\`\`
+
+---
+
+### Your Task
+
+**HTML Context:**
+\`\`\`html
+${html}
+\`\`\`
+
+**Test Scenarios to Implement (in JSON format):**
+\`\`\`json
+${scenarios}
 \`\`\`
 `;
 
 export const retryGenerateTestsPrompt = (
-  testsOutput: string,
-  testsCode: string,
+  errorLog: string,
+  failingCode: string,
   htmlContext: string
 ): string => `
 You are an expert debugging and test automation engineer. The following Playwright test file, which you previously wrote, has failed during execution. Your task is to analyze the error, identify the bug in the code by cross-referencing with the original HTML, and provide a corrected, fully functional version of the entire test file.
 
 **Instructions:**
-1.  **Analyze the Error Log & HTML:** Carefully read the "Test Runner Error Log" and compare it against the "Original Test Code" and the "HTML Context". The error is often a locator that doesn't match the HTML.
-2.  **Correct the Code:** Rewrite the provided "Original Test Code" to fix all the bugs identified in the error log. Prioritize creating resilient, user-facing locators that accurately reflect the provided HTML.
-3.  **Preserve Passing Tests:** The final output MUST include the full, corrected TypeScript code for the entire test file. Tests that were not mentioned in the error log should be considered "passing" and must be returned unchanged.
-4.  **Return ONLY Code:** Do not include any explanations, comments, or markdown formatting in your final output.
+1.  **Analyze the Error Log & HTML:** Carefully read the "Test Runner Error Log" and compare it against the "Original Test Code" and the "HTML Context".
+2.  **Think Step-by-Step:** First, identify the specific locator or assertion that is causing the error. Second, find the correct element or state in the HTML. Finally, write the corrected code.
+3.  **Correct the Code:** Rewrite the provided "Original Test Code" to fix all the bugs identified in the error log. Prioritize creating resilient, user-facing locators.
+4.  **Preserve Passing Tests:** The final output MUST include the full, corrected TypeScript code for the entire test file. Tests not mentioned in the error log should be considered "passing" and must be returned unchanged.
+5.  **Return ONLY Code:** Your final output must be ONLY the TypeScript codewithout any explnations or comments.
 
 ---
 
 ### Original Test Code
 
 \`\`\`typescript
-${testsCode}
+${failingCode}
 \`\`\`
 
 ---
@@ -81,12 +109,12 @@ ${testsCode}
 ### Test Runner Error Log
 
 \`\`\`
-${testsOutput}
+${errorLog}
 \`\`\`
 
 ---
 
-### HTML Context
+### HTML Context (Truncated)
 
 \`\`\`html
 ${htmlContext}

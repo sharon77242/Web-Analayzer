@@ -32,7 +32,15 @@ async function learnTests() {
   await logInfo("sending model to learn tests for url: ", url);
   const playwrightVersion = await getPackageVersion("playwright");
 
-  return baseLearnTests(generateTestsPrompt(playwrightVersion));
+  const html = await dbService.read(DESTINATION.HTML);
+  if (!html) throw new ThrowingError("html File does not exists");
+
+  const scenarios = await dbService.read(DESTINATION.SCENARIOS);
+  if (!scenarios) throw new ThrowingError("scenarios File does not exists");
+
+  return baseLearnTests(
+    generateTestsPrompt(scenarios, html, playwrightVersion)
+  );
 }
 
 async function retryLearningTests(testsOutput: string) {
