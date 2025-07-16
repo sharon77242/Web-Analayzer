@@ -6,7 +6,7 @@ import {
   loadHistory,
 } from "../config";
 import globalStore from "../globalStore";
-import { logInfo } from "../logger";
+import { logDebug, logInfo } from "../logger";
 import { ThrowingError } from "../types";
 import { getPackageVersion } from "../utils";
 import { aIProxy } from "./aIProxy";
@@ -80,6 +80,7 @@ async function generateTestsForPage(html: string) {
   while (!testResults.success && times <= 10) {
     await promptHistoryService.clearAll();
     await logInfo("retry tests generation times:", times++);
+    await logDebug("tests run failed with results:", testResults.output);
     await retryGenerateTests(testResults.output);
     testResults = await testRunnerService.runTests();
   }

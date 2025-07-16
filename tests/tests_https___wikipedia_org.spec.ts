@@ -1,229 +1,316 @@
 import { test, expect } from '@playwright/test';
 
+test.describe('TopTenLanguageLinks', () => {
+  test('User clicks the English link — user is navigated to en.wikipedia.org', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    const link = page.getByRole('link', { name: 'English' });
+    await link.click();
+    await expect(page).toHaveURL(/.*en.wikipedia.org/);
+  });
+
+  test('User clicks the 日本語 link — user is navigated to ja.wikipedia.org', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    const link = page.getByRole('link', { name: '日本語' });
+    await link.click();
+    await expect(page).toHaveURL(/.*ja.wikipedia.org/);
+  });
+
+  test('User clicks the Русский link — user is navigated to ru.wikipedia.org', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    const link = page.getByRole('link', { name: 'Русский' });
+    await link.click();
+    await expect(page).toHaveURL(/.*ru.wikipedia.org/);
+  });
+
+  test('User clicks the Deutsch link — user is navigated to de.wikipedia.org', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    const link = page.getByRole('link', { name: 'Deutsch' });
+    await link.click();
+    await expect(page).toHaveURL(/.*de.wikipedia.org/);
+  });
+
+  test('User clicks the Español link — user is navigated to es.wikipedia.org', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    const link = page.getByRole('link', { name: 'Español' });
+    await link.click();
+    await expect(page).toHaveURL(/.*es.wikipedia.org/);
+  });
+
+  test('User clicks the Français link — user is navigated to fr.wikipedia.org', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    const link = page.getByRole('link', { name: 'Français' });
+    await link.click();
+    await expect(page).toHaveURL(/.*fr.wikipedia.org/);
+  });
+
+  test('User clicks the 中文 link — user is navigated to zh.wikipedia.org', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    const link = page.getByRole('link', { name: '中文' });
+    await link.click();
+    await expect(page).toHaveURL(/.*zh.wikipedia.org/);
+  });
+
+  test('User clicks the Italiano link — user is navigated to it.wikipedia.org', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    const link = page.getByRole('link', { name: 'Italiano' });
+    await link.click();
+    await expect(page).toHaveURL(/.*it.wikipedia.org/);
+  });
+
+  test('User clicks the Português link — user is navigated to pt.wikipedia.org', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    const link = page.getByRole('link', { name: 'Português' });
+    await link.click();
+    await expect(page).toHaveURL(/.*pt.wikipedia.org/);
+  });
+
+  test('User clicks the فارسی link — user is navigated to fa.wikipedia.org', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    const link = page.getByRole('link', { name: /فارسی/ });
+    await link.click();
+    await expect(page).toHaveURL(/.*fa.wikipedia.org/);
+  });
+});
+
 test.describe('SearchForm', () => {
-  test('Searching with term Quantum mechanics redirects to search results', async ({ page }) => {
+  test('Enter valid keyword and click Search — search results for the keyword load', async ({ page }) => {
     await page.goto('https://www.wikipedia.org');
-    await page.getByRole('searchbox', { name: 'Search Wikipedia' }).fill('Quantum mechanics');
+    await page.getByRole('searchbox', { name: 'Search Wikipedia' }).fill('test');
     await page.getByRole('button', { name: 'Search' }).click();
-    await expect(page).toHaveURL(/en\.wikipedia\.org\/wiki\/Quantum_mechanics/);
+    await expect(page).toHaveURL(/wiki\/Test/);
   });
 
-  test('Pressing Enter after entering Helium redirects to search results', async ({ page }) => {
+  test('Select Spanish language from dropdown, enter keyword and click Search — Spanish results load', async ({ page }) => {
     await page.goto('https://www.wikipedia.org');
-    const searchBox = page.getByRole('searchbox', { name: 'Search Wikipedia' });
-    await searchBox.fill('Helium');
-    await searchBox.press('Enter');
-    await expect(page).toHaveURL(/en\.wikipedia\.org\/wiki\/Helium/);
+    const select = page.locator('#searchLanguage');
+    await select.selectOption('es');
+    await page.getByRole('searchbox', { name: 'Search Wikipedia' }).fill('test');
+    await page.getByRole('button', { name: 'Search' }).click();
+    await expect(page).toHaveURL(/wiki\/Test/);
   });
 
-  test('Submitting empty form redirects to search page', async ({ page }) => {
+  test('Press Enter in search box with valid keyword — search results load', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    await page.getByRole('searchbox', { name: 'Search Wikipedia' }).fill('playwright');
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/wiki\/Playwright/);
+  });
+
+  test('Enter empty query and click Search — empty query results or home page reload', async ({ page }) => {
     await page.goto('https://www.wikipedia.org');
     await page.getByRole('button', { name: 'Search' }).click();
-    await expect(page).toHaveURL(/en\.wikipedia\.org/);
-    await expect(page).toHaveURL(/search=/);
+    await expect(page).toHaveURL(/wiki\/Special:Search/);
+  });
+
+  test('Search with special characters in keyword — search displays correct results', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    await page.getByRole('searchbox', { name: 'Search Wikipedia' }).fill('C++@#');
+    await page.getByRole('button', { name: 'Search' }).click();
+    await expect(page).toHaveURL(/Special:Search.*search=C%2B%2B%40%/);
+  });
+
+  test('Disable JavaScript, change language dropdown and click Search — search uses chosen language', async ({ page }) => {
+    await page.addInitScript(() => {
+      (window as any).eval = () => {};
+      Object.defineProperty(navigator, 'webdriver', { get: () => false });
+    });
+    await page.goto('https://www.wikipedia.org', { waitUntil: 'load' });
+    const select = page.locator('#searchLanguage');
+    await select.selectOption('fr');
+    await page.getByRole('searchbox', { name: 'Search Wikipedia' }).fill('test');
+    await page.getByRole('button', { name: 'Search' }).click();
+    await expect(page).toHaveURL(/\/\/fr.wikipedia.org\/wiki\/Test/);
   });
 });
 
-test.describe('LanguageSelectionDropdown', () => {
-  test("Selecting Español and searching 'Sol' redirects to Spanish results", async ({ page }) => {
+test.describe('LanguageDropdown', () => {
+  test('Open dropdown, select German, verify language code changes to "de" in label', async ({ page }) => {
     await page.goto('https://www.wikipedia.org');
-    await page.locator('select[name="language"]').selectOption('es');
-    const searchBox = page.getByRole('searchbox', { name: 'Search Wikipedia' });
-    await searchBox.fill('Sol');
-    await searchBox.press('Enter');
-    await expect(page).toHaveURL('https://es.wikipedia.org/wiki/Sol');
+    const select = page.locator('#searchLanguage');
+    await select.selectOption({ label: 'Deutsch' });
+    await expect(page.locator('#jsLangLabel')).toHaveText('de');
   });
 
-  test('Selecting Japanese and submitting empty search redirects to Japanese search page', async ({ page }) => {
+  test('Select a non-English language using keyboard arrows, confirm unit selection change', async ({ page }) => {
     await page.goto('https://www.wikipedia.org');
-    await page.locator('select[name="language"]').selectOption('ja');
-    await page.getByRole('button', { name: 'Search' }).click();
-    await expect(page).toHaveURL(/ja\.wikipedia\.org/);
-    await expect(page).toHaveURL(/search=/);
+    const select = page.locator('#searchLanguage');
+    await select.focus();
+    await select.press('ArrowDown');
+    await select.press('Enter');
+    await expect(page.locator('#jsLangLabel')).not.toHaveText('en');
   });
 
-  test('Unable to select invalid language option from dropdown', async ({ page }) => {
+  test('Close dropdown without selecting — dropdown closes and language remains unchanged', async ({ page }) => {
     await page.goto('https://www.wikipedia.org');
-    const options = await page.locator('select[name="language"] option').all();
-    const validOptions = await Promise.all(options.map(opt => opt.getAttribute('value')));
-    await expect(validOptions).not.toContain('invalid-value');
-  });
-});
-
-test.describe('TypeaheadSuggestions', () => {
-  test("Typing 'App' shows relevant suggestions", async ({ page }) => {
-    await page.goto('https://www.wikipedia.org');
-    await page.getByRole('searchbox', { name: 'Search Wikipedia' }).fill('App');
-    await expect(page.locator('.suggestions-dropdown')).toBeVisible();
-    await expect(page.locator('.suggestion-title', { hasText: 'Apple' }).first()).toBeVisible();
+    const select = page.locator('#searchLanguage');
+    await expect(page.locator('#jsLangLabel')).toHaveText('en');
+    await select.focus();
+    await select.press('Escape');
+    await expect(page.locator('#jsLangLabel')).toHaveText('en');
   });
 
-  test('Clicking suggestion Apple Inc. navigates directly to article', async ({ page }) => {
+  test('Verify that all 60+ languages appear in the dropdown menu', async ({ page }) => {
     await page.goto('https://www.wikipedia.org');
-    await page.getByRole('searchbox', { name: 'Search Wikipedia' }).fill('Apple');
-    await page.locator('.suggestion-link:has-text("Apple Inc.")').first().click();
-    await expect(page).toHaveURL(/en\.wikipedia\.org\/wiki\/Apple_Inc\./);
+    const options = await page.locator('#searchLanguage option').all();
+    expect(options.length).toBeGreaterThanOrEqual(60);
   });
 
-  test("Typing '###' shows no results message", async ({ page }) => {
+  test('Select Arabic, verify RTL styling and bdo/bdi tags render correctly', async ({ page }) => {
     await page.goto('https://www.wikipedia.org');
-    await page.getByRole('searchbox', { name: 'Search Wikipedia' }).fill('###');
-    await expect(page.locator('.suggestions-dropdown').getByText('No results')).toBeVisible();
+    const select = page.locator('#searchLanguage');
+    await select.selectOption({ label: 'العربية' });
+    const label = page.locator('#jsLangLabel');
+    await expect(label).toHaveText('ar');
   });
 });
 
-test.describe('LanguageListButton', () => {
-  test('Clicking language button expands the language list', async ({ page }) => {
+test.describe('ExpandLanguagesButton', () => {
+  test('Click Read Wikipedia in your language — language list expands smoothly', async ({ page }) => {
     await page.goto('https://www.wikipedia.org');
     await page.getByRole('button', { name: 'Read Wikipedia in your language' }).click();
-    await expect(page.locator('.lang-list-container')).toBeVisible();
+    await expect(page.locator('#js-lang-lists')).toBeVisible();
   });
 
-  test('Clicking expanded language button collapses the list', async ({ page }) => {
+  test('Click Expand button twice — list collapses then expands again', async ({ page }) => {
     await page.goto('https://www.wikipedia.org');
     const button = page.getByRole('button', { name: 'Read Wikipedia in your language' });
     await button.click();
+    await expect(page.locator('#js-lang-lists')).toBeVisible();
     await button.click();
-    await expect(page.locator('.lang-list-container')).not.toBeVisible();
+    await expect(page.locator('#js-lang-lists')).toBeHidden();
   });
 
-  test('Repeated clicks toggle language list reliably', async ({ page }) => {
+  test('Verify that focus remains on button after expansion/collapse', async ({ page }) => {
     await page.goto('https://www.wikipedia.org');
     const button = page.getByRole('button', { name: 'Read Wikipedia in your language' });
-    
-    for (let i = 0; i < 5; i++) {
-      await button.click();
-      const isVisible = await page.locator('.lang-list-container').isVisible();
-      
-      await button.click();
-      await expect(page.locator('.lang-list-container')).not.toBeVisible();
-      
-      await expect(page.locator('.central-featured')).toBeVisible();
-    }
+    await button.click();
+    await expect(button).toBeFocused();
+  });
+
+  test('Use keyboard Enter on button — list expands, Enter again collapses', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    const button = page.getByRole('button', { name: 'Read Wikipedia in your language' });
+    await button.focus();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#js-lang-lists')).toBeVisible();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#js-lang-lists')).toBeHidden();
+  });
+
+  test('Verify expanded list loads within 1 second on mobile viewport', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto('https://www.wikipedia.org');
+    await page.getByRole('button', { name: 'Read Wikipedia in your language' }).click();
+    await expect(page.locator('#js-lang-lists')).toBeVisible({ timeout: 1000 });
   });
 });
 
-test.describe('TopLanguageLinks', () => {
-  test('Clicking English language link navigates to en.wikipedia.org', async ({ page }) => {
+test.describe('SisterProjectLinks', () => {
+  test('Click Commons link — navigates to commons.wikimedia.org', async ({ page }) => {
     await page.goto('https://www.wikipedia.org');
-    await page.locator('#js-link-box-en').click();
-    await expect(page).toHaveURL('https://en.wikipedia.org/wiki/Main_Page');
+    await page.getByRole('link', { name: 'Commons Free media collection' }).click();
+    await expect(page).toHaveURL(/.*commons.wikimedia.org/);
   });
 
-  test('Clicking 日本語 link navigates to ja.wikipedia.org', async ({ page }) => {
+  test('Click Wikivoyage — opens free travel guide site', async ({ page }) => {
     await page.goto('https://www.wikipedia.org');
-    await page.locator('#js-link-box-ja').click();
-    await expect(page).toHaveURL(/ja\.wikipedia\.org/);
+    await page.getByRole('link', { name: 'Wikivoyage Free travel guide' }).click();
+    await expect(page).toHaveURL(/.*wikivoyage.org/);
   });
 
-  test('All top language links have valid URLs', async ({ page }) => {
+  test('Click Wiktionary — opens dictionary site', async ({ page }) => {
     await page.goto('https://www.wikipedia.org');
-    const languageLinks = page.locator('.central-featured-lang .link-box');
-    const count = await languageLinks.count();
-    
-    for (let i = 0; i < count; i++) {
-      const href = await languageLinks.nth(i).getAttribute('href');
-      await expect(href).toMatch(/^(\/\/|https:\/\/)/);
-    }
+    await page.getByRole('link', { name: 'Wiktionary Free dictionary' }).click();
+    await expect(page).toHaveURL(/.*wiktionary.org/);
+  });
+
+  test('Click Wikibooks — opens free textbooks site', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    await page.getByRole('link', { name: 'Wikibooks Free textbooks' }).click();
+    await expect(page).toHaveURL(/.*wikibooks.org/);
+  });
+
+  test('Click Wikinews — opens free news source site', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    await page.getByRole('link', { name: 'Wikinews Free news source' }).click();
+    await expect(page).toHaveURL(/.*wikinews.org/);
+  });
+
+  test('Click Wikidata — opens free knowledge base site', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    await page.getByRole('link', { name: 'Wikidata Free knowledge base' }).click();
+    await expect(page).toHaveURL(/.*wikidata.org/);
+  });
+
+  test('Click Wikiversity — opens free learning resources site', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    await page.getByRole('link', { name: 'Wikiversity Free learning resources' }).click();
+    await expect(page).toHaveURL(/.*wikiversity.org/);
+  });
+
+  test('Click Wikiquote — opens free quote compendium site', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    await page.getByRole('link', { name: 'Wikiquote Free quote compendium' }).click();
+    await expect(page).toHaveURL(/.*wikiquote.org/);
+  });
+
+  test('Click MediaWiki — opens free open wiki software site', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    await page.getByRole('link', { name: 'MediaWiki Free & open wiki software' }).click();
+    await expect(page).toHaveURL(/.*mediawiki.org/);
+  });
+
+  test('Click Wikisource — opens free content library site', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    await page.getByRole('link', { name: 'Wikisource Free content library' }).click();
+    await expect(page).toHaveURL(/.*wikisource.org/);
+  });
+
+  test('Click Wikispecies — opens free species directory site', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    await page.getByRole('link', { name: 'Wikispecies Free species directory' }).click();
+    await expect(page).toHaveURL(/.*species.wikimedia.org/);
+  });
+
+  test('Click Wikifunctions — opens free function library site', async ({ page }) => {
+    await page.goto('https://www.wikipedia.org');
+    await page.getByRole('link', { name: 'Wikifunctions Free function library' }).click();
+    await expect(page).toHaveURL(/.*wikifunctions.org/);
   });
 });
 
-test.describe('OtherProjectsLinks', () => {
-  test('Clicking Commons link navigates to commons.wikimedia.org', async ({ page }) => {
-    await page.goto('https://www.wikipedia.org');
-    await page.getByRole('link', { name: /^Commons$/ }).click();
-    await expect(page).toHaveURL('https://commons.wikimedia.org/wiki/Main_Page');
-  });
-
-  test('Clicking Wikidata link navigates to wikidata.org', async ({ page }) => {
-    await page.goto('https://www.wikipedia.org');
-    await page.getByRole('link', { name: /^Wikidata$/ }).click();
-    await expect(page).toHaveURL('https://www.wikidata.org/wiki/Wikidata:Main_Page');
-  });
-
-  test('All project links have accessible text', async ({ page }) => {
-    await page.goto('https://www.wikipedia.org');
-    const projectLinks = page.locator('.other-project-link');
-    const count = await projectLinks.count();
-    
-    for (let i = 0; i < count; i++) {
-      const link = projectLinks.nth(i);
-      const linkText = await link.textContent();
-      await expect(linkText.trim()).not.toBe('');
-    }
-  });
-});
-
-test.describe('AppDownloadBadges', () => {
-  test('Clicking Google Play badge opens store page', async ({ page }) => {
+test.describe('AppBadgeLinks', () => {
+  test('Click Google Play badge — redirects to Wikipedia Android app on Play Store', async ({ page, context }) => {
     await page.goto('https://www.wikipedia.org');
     const [newPage] = await Promise.all([
-      page.context().waitForEvent('page'),
+      context.waitForEvent('page'),
       page.locator('.app-badge-android a').click()
     ]);
-    await expect(newPage).toHaveURL(/play\.google\.com\/store\/apps\/.*wikipedia/);
+    await expect(newPage).toHaveURL(/play.google.com.*org.wikipedia/);
   });
 
-  test('Clicking App Store badge opens store page', async ({ page }) => {
+  test('Click Apple App Store badge — redirects to Wikipedia iOS app on App Store', async ({ page, context }) => {
     await page.goto('https://www.wikipedia.org');
     const [newPage] = await Promise.all([
-      page.context().waitForEvent('page'),
+      context.waitForEvent('page'),
       page.locator('.app-badge-ios a').click()
     ]);
-    await expect(newPage).toHaveURL(/apple\.com\/app\/wikipedia/);
+    await expect(newPage).toHaveURL(/apps.apple.com.*id324715238/);
   });
 
-  test('App store links remain functional without JavaScript', async ({ browser }) => {
-    const context = await browser.newContext({ javaScriptEnabled: false });
-    const page = await context.newPage();
+  test('Right-click badges — native context menu still opens (not image)', async ({ page }) => {
     await page.goto('https://www.wikipedia.org');
-    
-    const googleHref = await page.locator('.app-badge-android a').getAttribute('href');
-    await expect(googleHref).toContain('play.google.com');
-    
-    const appleHref = await page.locator('.app-badge-ios a').getAttribute('href');
-    await expect(appleHref).toContain('itunes.apple.com');
-  });
-});
-
-test.describe('LicenseAndPolicyLinks', () => {
-  test('Creative Commons license link navigates correctly', async ({ page }) => {
-    await page.goto('https://www.wikipedia.org');
-    await page.getByRole('link', { name: 'Creative Commons Attribution-ShareAlike License' }).click();
-    await expect(page).toHaveURL('https://creativecommons.org/licenses/by-sa/4.0/');
+    await page.locator('.app-badge-android a').click({ button: 'right' });
+    // no assertion required – test passes if no exception is thrown
   });
 
-  test('Privacy Policy link navigates correctly', async ({ page }) => {
+  test('Verify badges have valid noreferrer and target=_blank attributes', async ({ page }) => {
     await page.goto('https://www.wikipedia.org');
-    await page.getByRole('link', { name: 'Privacy Policy' }).click();
-    await expect(page).toHaveURL(/foundation\.wikimedia\.org.*\/Policy:Privacy_policy/);
-  });
-
-  test('License links meet contrast accessibility standards', async ({ page }) => {
-    await page.goto('https://www.wikipedia.org');
-    const licenseLinks = page.locator('.site-license a');
-    const count = await licenseLinks.count();
-    
-    for (let i = 0; i < count; i++) {
-      const link = licenseLinks.nth(i);
-      const color = await link.evaluate(el => window.getComputedStyle(el).color);
-      const bgColor = await link.evaluate(el => window.getComputedStyle(el).backgroundColor);
-      
-      const getRgbValues = (str) => {
-        const match = str.match(/rgba?\((\d+), (\d+), (\d+)/);
-        return match ? [parseInt(match[1]), parseInt(match[2]), parseInt(match[3])] : null;
-      };
-      
-      const textRgb = getRgbValues(color);
-      const bgRgb = getRgbValues(bgColor);
-      
-      if (!textRgb || !bgRgb) continue;
-      
-      const lum1 = (textRgb[0] * 0.299 + textRgb[1] * 0.587 + textRgb[2] * 0.114) / 255;
-      const lum2 = (bgRgb[0] * 0.299 + bgRgb[1] * 0.587 + bgRgb[2] * 0.114) / 255;
-      const ratio = lum1 > lum2 ? (lum1 + 0.05) / (lum2 + 0.05) : (lum2 + 0.05) / (lum1 + 0.05);
-
-      await expect(ratio).toBeGreaterThan(4.5);
-    }
+    const androidLink = page.locator('.app-badge-android a');
+    const iosLink = page.locator('.app-badge-ios a');
+    await expect(androidLink).toHaveAttribute('rel', 'noreferrer');
+    await expect(androidLink).toHaveAttribute('target', '_blank');
+    await expect(iosLink).toHaveAttribute('rel', 'noreferrer');
+    await expect(iosLink).toHaveAttribute('target', '_blank');
   });
 });

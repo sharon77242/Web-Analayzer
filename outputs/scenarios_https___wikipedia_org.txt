@@ -1,42 +1,64 @@
 {
+  "TopTenLanguageLinks": [
+    "User clicks the English link — user is navigated to en.wikipedia.org",
+    "User clicks the 日本語 link — user is navigated to ja.wikipedia.org",
+    "User clicks the Русский link — user is navigated to ru.wikipedia.org",
+    "User clicks the Deutsch link — user is navigated to de.wikipedia.org",
+    "User clicks the Español link — user is navigated to es.wikipedia.org",
+    "User clicks the Français link — user is navigated to fr.wikipedia.org",
+    "User clicks the 中文 link — user is navigated to zh.wikipedia.org",
+    "User clicks the Italiano link — user is navigated to it.wikipedia.org",
+    "User clicks the Português link — user is navigated to pt.wikipedia.org",
+    "User clicks the فارسی link — user is navigated to fa.wikipedia.org"
+  ],
   "SearchForm": [
-    "Positive: Enter a search term 'Quantum mechanics' and click search button; expect redirect to search results page for that term.",
-    "Positive: Enter search term 'Helium' and press Enter key; expect redirect to search results page.",
-    "Negative: Submit empty search form; expect redirection to main page of selected language Wikipedia."
+    "Enter valid keyword and click Search — search results for the keyword load",
+    "Select Spanish language from dropdown, enter keyword and click Search — Spanish results load",
+    "Press Enter in search box with valid keyword — search results load",
+    "Enter empty query and click Search — empty query results or home page reload",
+    "Search with special characters in keyword — search displays correct results",
+    "Disable JavaScript, change language dropdown and click Search — search uses chosen language"
   ],
-  "LanguageSelectionDropdown": [
-    "Positive: Select 'Español' from dropdown and search 'Sol'; expect redirect to es.wikipedia.org search results.",
-    "Positive: Select '日本語' and submit empty search; expect redirect to ja.wikipedia.org main page.",
-    "Negative: Select invalid option; expect default fallback to English or error prevention (though UI constraints prevent invalid selections)."
+  "LanguageDropdown": [
+    "Open dropdown, select German, verify language code changes to 'de' in label",
+    "Select a non-English language using keyboard arrows, confirm unit selection change",
+    "Close dropdown without selecting — dropdown closes and language remains unchanged",
+    "Verify that all 60+ languages appear in the dropdown menu",
+    "Select Arabic, verify RTL styling and bdo/bdi tags render correctly"
   ],
-  "TypeaheadSuggestions": [
-    "Positive: Type 'App' into search field; expect dropdown appears with relevant suggestions like 'Apple'.",
-    "Positive: Click suggestion 'Apple Inc.'; expect direct navigation to Apple Inc. article.",
-    "Negative: Type special characters '###'; expect 'No results' message in dropdown or empty suggestion list."
+  "ExpandLanguagesButton": [
+    "Click Read Wikipedia in your language — language list expands smoothly",
+    "Click Expand button twice — list collapses then expands again",
+    "Verify that focus remains on button after expansion/collapse",
+    "Use keyboard Enter on button — list expands, Enter again collapses",
+    "Verify expanded list loads within 1 second on mobile viewport"
   ],
-  "LanguageListButton": [
-    "Positive: Click 'Read Wikipedia in your language' button; expect language list container to expand.",
-    "Positive: Click button again when expanded; expect language list container to collapse.",
-    "Negative: Repeated rapid clicks; expect stable toggle behavior without UI breakage."
+  "SisterProjectLinks": [
+    "Click Commons link — navigates to commons.wikimedia.org",
+    "Click Wikivoyage — opens free travel guide site",
+    "Click Wiktionary — opens dictionary site",
+    "Click Wikibooks — opens free textbooks site",
+    "Click Wikinews — opens free news source site",
+    "Click Wikidata — opens free knowledge base site",
+    "Click Wikiversity — opens free learning resources site",
+    "Click Wikiquote — opens free quote compendium site",
+    "Click MediaWiki — opens free open wiki software site",
+    "Click Wikisource — opens free content library site",
+    "Click Wikispecies — opens free species directory site",
+    "Click Wikifunctions — opens free function library site"
   ],
-  "TopLanguageLinks": [
-    "Positive: Click English language link; expect navigation to en.wikipedia.org.",
-    "Positive: Click 日本語 link; expect navigation to ja.wikipedia.org.",
-    "Negative: Check broken link via developer tools; expect valid href attribute and 200 status."
+  "AppBadgeLinks": [
+    "Click Google Play badge — redirects to Wikipedia Android app on Play Store",
+    "Click Apple App Store badge — redirects to Wikipedia iOS app on App Store",
+    "Right-click badges — native context menu still opens (not image)",
+    "Verify badges have valid noreferrer and target=_blank attributes"
   ],
-  "OtherProjectsLinks": [
-    "Positive: Click 'Commons' project link; expect navigation to commons.wikimedia.org.",
-    "Positive: Click 'Wikidata' link; expect navigation to wikidata.org.",
-    "Negative: Hover over disabled-looking icon; verify no broken images via alt text inspection."
+  "FooterLicenseLinks": [
+    "Click Creative Commons license link — opens CC BY-SA 4.0 license page",
+    "Click Terms of Use link — opens Wikimedia Foundation Terms page",
+    "Click Privacy Policy link — opens Wikimedia Foundation Privacy Policy"
   ],
-  "AppDownloadBadges": [
-    "Positive: Click Google Play badge; expect new tab opens to play.google.com/store/apps/details?id=org.wikipedia.",
-    "Positive: Click App Store badge; expect new tab opens to apps.apple.com/app/wikipedia/id324715238.",
-    "Negative: Disable JavaScript; verify links remain functional via href attribute inspection."
-  ],
-  "LicenseAndPolicyLinks": [
-    "Positive: Click 'Creative Commons... License' link; expect navigation to creativecommons.org/licenses/by-sa/4.0/.",
-    "Positive: Click 'Privacy Policy' link; expect navigation to foundation.wikimedia.org policy page.",
-    "Negative: Check link accessibility; verify contrast ratios meet WCAG standards via tools."
+  "DonationLink": [
+    "Click You can support our work with a donation — opens donation form with campaign params"
   ]
 }

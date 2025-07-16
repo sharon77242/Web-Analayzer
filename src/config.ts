@@ -21,7 +21,8 @@ const huggingFaceConfig: ProviderConfig = {
 const openRouterConfig: ProviderConfig = {
   apiProvider: "OpenRouter",
   apiUrl: "https://openrouter.ai/api/v1/chat/completions",
-  modelId: "deepseek/deepseek-r1-0528:free",
+  //modelId: "deepseek/deepseek-r1-0528:free",
+  modelId: "moonshotai/kimi-k2:free",
   apiToken: process.env.OPENROUTER_API_KEY,
   // OpenRouter requires these headers for identification.
   extraHeaders: {
